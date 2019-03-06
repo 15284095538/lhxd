@@ -1,0 +1,41 @@
+.tittext {
+  text-align: center;
+  margin: 160rpx 0;
+  font-size: 30rpx;
+}
+.Inputbox {
+  width: 550rpx;
+  border-bottom: 1rpx solid #d8d8d8;
+  font-size: 26rpx;
+  padding-left: 40rpx;
+  margin: 10rpx auto 0;
+  position: relative;
+  line-height: 80rpx;
+  margin-top: 30rpx;
+}
+.Inputbox .int {
+    height: 80rpx;
+}
+.Inputbox .getcode {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 80rpx;
+    font-size: 26rpx;
+    color: #ff792a;
+    z-index: 2;
+}
+.register {
+  width: 678rpx;
+  height: 182rpx;
+  position: relative;
+  left: 50rpx;
+  top: 310rpx;
+  cursor: pointer;
+}
+.register image {
+    width: 678rpx;
+    height: 182rpx;
+    display: block;
+}
+

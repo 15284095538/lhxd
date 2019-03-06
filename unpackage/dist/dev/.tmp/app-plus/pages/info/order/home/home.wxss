@@ -1,0 +1,121 @@
+page {
+  background-color: #F5F5F5;
+}
+.orderTop {
+  height: 85rpx;
+  line-height: 85rpx;
+  background-color: #fff;
+  font-size: 28rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.orderTop .li {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    text-align: center;
+}
+.orderTop .li.active {
+      color: #ff792a;
+}
+.orderTop .li.active text {
+        border-bottom: 5rpx solid #ff792a;
+        padding-bottom: 10rpx;
+}
+.list .li {
+  padding: 0 25rpx;
+  margin-top: 25rpx;
+  background-color: #fff;
+  font-size: 28rpx;
+}
+.list .li .tit {
+    height: 80rpx;
+    border-bottom: 1rpx solid #E2E2E2;
+    line-height: 80rpx;
+}
+.list .li .tit .address {
+      float: left;
+}
+.list .li .tit .type {
+      float: right;
+      color: #ff792a;
+}
+.list .li .details {
+    height: 170rpx;
+    padding: 25rpx 0;
+    border-bottom: 1rpx solid #E2E2E2;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.list .li .details .img {
+      display: inline-block;
+      width: 170rpx;
+      height: 170rpx;
+}
+.list .li .details .img image {
+        width: 170rpx;
+        height: 170rpx;
+}
+.list .li .details .text {
+      width: 500rpx;
+      margin-left: 30rpx;
+      display: inline-block;
+}
+.list .li .details .text .choice {
+        color: #ff792a;
+}
+.list .li .details .text .h5 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        line-height: 45rpx;
+}
+.list .li .details .text .oneday {
+        line-height: 45rpx;
+        color: #93939e;
+}
+.list .li .details .text .onemonth {
+        line-height: 40rpx;
+        color: #93939e;
+}
+.list .li .info {
+    padding: 20rpx 0;
+    height: 60rpx;
+    line-height: 60rpx;
+}
+.list .li .info .fl {
+      float: left;
+}
+.list .li .info .choice {
+      color: #ff792a;
+      margin-left: 10rpx;
+}
+.list .li .info .fr {
+      float: right;
+}
+.list .li .info .fr .btn {
+        width: 140rpx;
+        height: 60rpx;
+        border: 1rpx solid #E2E2E2;
+        text-align: center;
+        line-height: 60rpx;
+        display: inline-block;
+        margin: 5rpx 20rpx 0 0;
+        border-radius: 3px;
+        font-size: 26rpx;
+        color: #909090;
+}
+.list .li .info .fr .btn:last-child {
+          margin-right: 0;
+}
+.list .li .info .fr .choice {
+        border: 1rpx solid #ff792a;
+        color: #ff792a;
+}
+

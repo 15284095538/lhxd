@@ -1,0 +1,27 @@
+.examine {
+  width: 600rpx;
+  height: 300rpx;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin: -150rpx 0 0 -300rpx;
+  text-align: center;
+}
+.examine .img {
+    width: 115rpx;
+    height: 115rpx;
+    margin: 0 auto;
+}
+.examine .img image {
+      width: 115rpx;
+      height: 115rpx;
+}
+.examine .state {
+    font-size: 28rpx;
+    margin: 60rpx auto 30rpx;
+}
+.examine .txt {
+    font-size: 30rpx;
+    color: #a2a2a2;
+}
+

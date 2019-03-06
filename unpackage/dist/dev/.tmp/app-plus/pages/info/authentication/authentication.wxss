@@ -1,0 +1,49 @@
+page {
+  background-color: #f5f5f5;
+}
+.int {
+  background-color: #fff;
+  font-size: 28rpx;
+}
+.int .box {
+    width: 690rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    margin: 0 auto;
+    border-bottom: 1rpx solid #E2E2E2;
+}
+.int .box ._input {
+      width: 690rpx;
+      height: 100rpx;
+      line-height: 100rpx;
+}
+.upload .tit {
+  width: 690rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin: 0 auto;
+  font-size: 30rpx;
+}
+.upload .img {
+  height: 235rpx;
+  padding: 25rpx;
+  background-color: #fff;
+}
+.upload .img image {
+    width: 235rpx;
+    height: 235rpx;
+}
+.register {
+  width: 678rpx;
+  height: 182rpx;
+  position: relative;
+  left: 50rpx;
+  top: 20rpx;
+  cursor: pointer;
+}
+.register image {
+    width: 678rpx;
+    height: 182rpx;
+    display: block;
+}
+

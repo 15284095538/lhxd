@@ -1,0 +1,69 @@
+.swiper {
+  height: 370rpx;
+  width: 100%;
+}
+.swiper swiper {
+    height: 370rpx;
+    width: 100%;
+}
+.swiper image {
+    height: 370rpx;
+    width: 750rpx;
+    display: block;
+}
+.menuLink {
+  font-size: 0;
+  padding-bottom: 20rpx;
+}
+.menuLink .li {
+    width: 150rpx;
+    height: 180rpx;
+    text-align: center;
+    display: inline-block;
+}
+.menuLink .li .img {
+      width: 92rpx;
+      height: 92rpx;
+      margin: 20rpx auto;
+      border-radius: 50%;
+      overflow: hidden;
+}
+.menuLink .li .img image {
+        width: 92rpx;
+        height: 92rpx;
+        display: block;
+}
+.menuLink .li .text {
+      font-size: 22rpx;
+      color: #333333;
+      font-size: 26rpx;
+      color: #93939e;
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+         text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 50rpx;
+}
+.menuLink .li .text .choice {
+        color: #ff792a;
+}
+.RecommendHot {
+  width: 100%;
+  height: 90rpx;
+  background-color: #F5F5F5;
+}
+.RecommendHot .box {
+    line-height: 90rpx;
+    padding: 0 25rpx;
+}
+.RecommendHot .box .text {
+      font-size: 30rpx;
+      color: #333333;
+      float: left;
+}
+.RecommendHot .box .link {
+      float: right;
+      font-size: 28rpx;
+      color: #ff792a;
+}
+

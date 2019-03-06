@@ -1,0 +1,49 @@
+.logo {
+  width: 290rpx;
+  height: 290rpx;
+  margin: 100rpx auto;
+}
+.logo image {
+    width: 290rpx;
+    height: 290rpx;
+    display: block;
+}
+.Inputbox {
+  width: 550rpx;
+  border-bottom: 1rpx solid #d8d8d8;
+  font-size: 26rpx;
+  padding-left: 40rpx;
+  margin: 10rpx auto 0;
+}
+.Inputbox .int {
+    height: 80rpx;
+    line-height: 80rpx;
+}
+.forget {
+  width: 590rpx;
+  margin: 20rpx auto 0;
+  text-align: right;
+  font-size: 26rpx;
+  color: #ff792a;
+}
+.login {
+  width: 678rpx;
+  height: 182rpx;
+  cursor: pointer;
+  margin: 250rpx auto 0;
+}
+.login image {
+    width: 678rpx;
+    height: 182rpx;
+    display: block;
+}
+.register {
+  width: 590rpx;
+  margin: -30rpx auto 0;
+  font-size: 26rpx;
+  color: #ff792a;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+

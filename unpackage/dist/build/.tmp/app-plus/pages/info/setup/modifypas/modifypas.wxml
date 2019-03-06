@@ -1,0 +1,2 @@
+<import src="./modifypas.vue.wxml" />
+    <template is="09254d9c" data="{{ ...$root['0'], $root }}"/>

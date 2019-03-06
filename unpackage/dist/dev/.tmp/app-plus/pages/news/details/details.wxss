@@ -1,0 +1,10 @@
+page {
+  background-color: #F5F5F5;
+}
+.vHtml {
+  padding: 30rpx;
+  font-size: 28rpx;
+  line-height: 60rpx;
+  text-indent: 20rpx;
+}
+

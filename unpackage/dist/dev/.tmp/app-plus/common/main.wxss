@@ -1,0 +1,48 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*每个页面公共css */
+page {
+	color: #333;
+	background-color: #ffffff;
+	font-family: '\5FAE\8F6F\96C5\9ED1';
+	margin: 0 auto;
+	-webkit-tap-highlight-color: transparents
+}
+

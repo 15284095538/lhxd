@@ -1,0 +1,13 @@
+
+      !(function(){
+        var uniAppViewReadyCallback = function(){
+          setCssToHead(["body { background-color: #f5f5f5; }\n.",[1],"spDet { overflow: hidden; background-color: #fff; }\n.",[1],"spDet .",[1],"all { height: ",[0,90],"; line-height: ",[0,90],"; width: ",[0,690],"; margin: 0 auto ",[0,20],"; font-size: ",[0,28],"; }\n.",[1],"spDet .",[1],"all .",[1],"choice { color: #ff792a; }\n.",[1],"spDet .",[1],"box { width: ",[0,690],"; margin: ",[0,30]," auto 0; }\n.",[1],"spDet .",[1],"box .",[1],"img { display: inline-block; width: ",[0,190],"; height: ",[0,190],"; overflow: hidden; margin-right: ",[0,20],"; }\n.",[1],"spDet .",[1],"box .",[1],"img wx-image { width: ",[0,190],"; height: ",[0,190],"; }\n.",[1],"spDet .",[1],"text { display: inline-block; overflow: hidden; width: ",[0,440],"; height: ",[0,190],"; }\n.",[1],"spDet .",[1],"text .",[1],"tit { font-size: ",[0,28],"; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; line-height: ",[0,40],"; height: ",[0,80],"; }\n.",[1],"spDet .",[1],"text .",[1],"oneday { font-size: ",[0,26],"; color: #93939e; line-height: ",[0,50],"; }\n.",[1],"spDet .",[1],"text .",[1],"oneday .",[1],"choice { color: #ff792a; }\n.",[1],"payLi { background-color: #fff; margin-top: ",[0,20],"; }\n.",[1],"payLi .",[1],"tit { width: ",[0,690],"; height: ",[0,100],"; line-height: ",[0,100],"; margin: 0 auto; font-size: ",[0,32],"; }\n.",[1],"payLi .",[1],"li { width: ",[0,690],"; height: ",[0,100],"; line-height: ",[0,100],"; margin: 0 auto; font-size: ",[0,28],"; border-bottom: ",[0,1]," solid #E2E2E2; }\n.",[1],"payLi .",[1],"li wx-image:first-child { width: ",[0,51],"; height: ",[0,51],"; float: left; margin: ",[0,24.5]," ",[0,20]," 0 0; }\n.",[1],"payLi .",[1],"li .",[1],"s { width: ",[0,38],"; height: ",[0,38],"; margin: ",[0,31]," 0 0 0; float: right; }\n.",[1],"register { width: ",[0,678],"; height: ",[0,182],"; position: fixed; left: ",[0,36],"; bottom: ",[0,40],"; cursor: pointer; }\n.",[1],"register wx-image { width: ",[0,678],"; height: ",[0,182],"; display: block; }\n",],undefined,{path:"./pages/pay/pay.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/pay/pay.wxml') } }));
+        }
+        if(window.__uniAppViewReady__){
+          uniAppViewReadyCallback()
+        }else{
+          document.addEventListener('uniAppViewReady',uniAppViewReadyCallback)
+        }
+      })();
+      

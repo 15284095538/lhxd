@@ -1,0 +1,66 @@
+page {
+  background-color: #f5f5f5;
+}
+.balance {
+  height: 360rpx;
+  width: 750rpx;
+  background-color: #fff;
+  position: relative;
+}
+.balance image {
+    width: 699rpx;
+    height: 320rpx;
+    position: absolute;
+    left: 24.5rpx;
+    top: 20rpx;
+}
+.balance .text {
+    text-align: center;
+    width: 100%;
+    font-size: 48rpx;
+    position: absolute;
+    left: 0rpx;
+    top: 120rpx;
+    height: 120rpx;
+    line-height: 60rpx;
+    color: #fff;
+}
+.balance .text .company {
+      font-size: 28rpx;
+}
+.int {
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #fff;
+  margin-top: 30rpx;
+  padding: 0 25rpx;
+  font-size: 28rpx;
+}
+.int .input {
+    float: right;
+}
+.int .input ._input {
+      height: 100rpx;
+      width: 300rpx;
+      text-align: right;
+      float: left;
+}
+.ts {
+  width: 660rpx;
+  margin: 20rpx auto 0;
+  font-size: 28rpx;
+}
+.register {
+  width: 678rpx;
+  height: 182rpx;
+  position: relative;
+  left: 50rpx;
+  top: 420rpx;
+  cursor: pointer;
+}
+.register image {
+    width: 678rpx;
+    height: 182rpx;
+    display: block;
+}
+
