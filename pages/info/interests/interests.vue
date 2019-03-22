@@ -19,9 +19,19 @@
 				<input v-if=" userinfo.is_vip == 1 " v-model="price" type="text" value="" />元
 			</view>
 		</view>
+		
+		<view class="equity">
+			<view>会员权益：</view>
+			
+			<scroll-view  scroll-y="true">
+				<view v-html="vipEquityList" class="txt">
+					
+				</view>
+			</scroll-view>
+		</view>
 
 		<view class="ts">
-			提示：预充值后升级为会员，可享受折扣和免押金，第一次充值必须充值2000元，之后可自定义充值。
+			提示：预充值后升级为会员，可享受折扣和免押金，第一次充值必须充值5000元，之后可自定义充值。
 		</view>
 
 		<view @tap="addOrder()" class="register">
@@ -42,18 +52,20 @@
 				Title: '会员权益',
 				backshow: true,
 				topsrc: '../../../static/images/back.png',
-				price: 2000,
+				price: 5000,
 				userinfo: [],
 				order_id: '',
+				vipEquityList: [],
 			}
 		},
 		onLoad() {
 			this.userinfo = uni.getStorageSync('userinfo')
 			if (this.userinfo.is_vip == 2) {
-				this.price = 2000
+				this.price = 5000
 			} else {
 				this.price = ''
 			}
+			this.vipEquity()
 		},
 		methods: {
 			getUserino() { // 获取个人信息
@@ -70,12 +82,23 @@
 					}
 				})
 			},
+			vipEquity() { // 获取个人信息
+				var that = this;
+				let params = {
+					_token: uni.getStorageSync('userinfo')._token
+				}
+				this.$http.HttpRequst.requestLogin(true, 'user/vipEquity', params, 'POST', res => {
+					if (res.code === 200) {
+						that.vipEquityList = res.data
+					}
+				})
+			},
 			addOrder() { // 创建订单
 				if (this.price == '') {
 					uni.showToast({
 						title: '请输入充值金额',
 						icon: 'success',
-						duration: 800
+						duration: 1000
 					});
 					return false
 				}
@@ -108,11 +131,11 @@
 										uni.showToast({
 											title: '支付成功',
 											icon: 'success',
-											duration: 800,
+											duration: 1000,
 											success() {
 												setTimeout(res => {
 													that.getUserino()
-												}, 800)
+												}, 1000)
 											}
 										});
 									},
@@ -120,7 +143,7 @@
 										uni.showToast({
 											title: '支付取消',
 											icon: 'success',
-											duration: 800
+											duration: 1000
 										});
 									}
 								});
@@ -135,11 +158,11 @@
 										uni.showToast({
 											title: '支付成功',
 											icon: 'success',
-											duration: 800,
+											duration: 1000,
 											success() {
 												setTimeout(res => {
 													that.getUserino()
-												}, 800)
+												}, 1000)
 											}
 										});
 									},
@@ -147,7 +170,7 @@
 										uni.showToast({
 											title: '支付取消',
 											icon: 'success',
-											duration: 800
+											duration: 1000
 										});
 									}
 								});
@@ -218,22 +241,40 @@
 
 	.ts {
 		width: 660upx;
-		margin: 20upx auto 0;
+		margin: 50upx auto 0;
 		font-size: 28upx;
 	}
 
 	.register {
 		width: 678upx;
 		height: 182upx;
-		position: relative;
+		position: absolute;
 		left: 50upx;
-		top: 420upx;
+		bottom: -30upx;
 		cursor: pointer;
 
 		image {
 			width: 678upx;
 			height: 182upx;
 			display: block;
+		}
+	}
+	
+	.equity{
+		padding: 30upx 20upx 0 20upx;
+		border-top: 1upx solid #e2e2e2;
+		font-size: 28upx;
+		height: 420upx;
+		overflow: hidden;
+		background-color: #fff;
+		
+		scroll-view{
+			width: 100%;
+			height: 100%;
+		}
+		
+		.txt{
+			margin-top: 20upx;
 		}
 	}
 </style>

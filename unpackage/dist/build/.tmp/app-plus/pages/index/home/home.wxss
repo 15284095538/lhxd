@@ -2,6 +2,13 @@
   height: 370rpx;
   width: 100%;
 }
+.swiper .city {
+    position: absolute;
+    left: 30rpx;
+    top: 30rpx;
+    z-index: 9;
+    color: #fff;
+}
 .swiper swiper {
     height: 370rpx;
     width: 100%;

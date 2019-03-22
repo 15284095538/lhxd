@@ -9,11 +9,14 @@
 		<view class="Inputbox" style="background: url('../../static/images/tel.png') no-repeat 0 50%; background-size: 22upx 34upx;">
 			<input type="number" class="int" placeholder="请输入手机号码" v-model="tel" />
 		</view>
+		<view class="Inputbox" style="background: url('../../static/images/email.png') no-repeat 0 50%; background-size: 34upx 34upx;">
+			<input type="text" class="int" placeholder="请输入邮箱" v-model="email" />
+		</view>
 		<view class="Inputbox" style="background: url('../../static/images/pas.png') no-repeat 0 50%; background-size: 26upx 34upx;">
 			<input type="password" class="int" placeholder="请输入密码" v-model="pas" />
 		</view>
 		<view class="Inputbox" style="background: url('../../static/images/code.png') no-repeat 0 50%; background-size: 29upx 32upx;">
-			<input type="password" class="int" placeholder="请输入验证码" v-model="yzm" />
+			<input type="number" class="int" placeholder="请输入验证码" v-model="yzm" />
 			<view v-on:click="settime" class="getcode">{{code}}</view>
 		</view>
 		<view @tap="registerClick()" class="register">
@@ -38,6 +41,7 @@
 				tel: '',
 				pas: '',
 				yzm: '',
+				email: '',
 				code: '获取验证码', // 按钮里显示的内容
 				totalTime: 60, //记录具体倒计时时间
 				canClick: true //添加canClick
@@ -47,6 +51,7 @@
 			registerClick() {
 				const that = this;
 				const myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+				const reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
 				if (!myreg.test(that.tel)) {
 					uni.showToast({
 						title: '请输入正确手机号',
@@ -57,6 +62,24 @@
 				if (that.tel === '') {
 					uni.showToast({
 						title: '请输入手机号',
+						icon: 'success',
+						mask: true,
+						duration: 1000
+					});
+					return false
+				}
+				if (that.email === '') {
+					uni.showToast({
+						title: '请输入邮箱',
+						icon: 'success',
+						mask: true,
+						duration: 1000
+					});
+					return false
+				}
+				if( !reg.test(that.email) ){
+					uni.showToast({
+						title: '请输入正确邮箱',
 						icon: 'success',
 						mask: true,
 						duration: 1000
@@ -83,20 +106,25 @@
 				}
 				const params = {
 					tel: that.tel,
+					email: that.email,
 					password: that.pas,
 					code: that.yzm
 				}
-				this.$http.HttpRequst.requestLogin(true, 'user/register', params, 'POST', res => {
+				this.$http.HttpRequst.requestLogin(true, 'user/register', params, 'POST', ress => {
 					// console.log( res )
-					uni.showLoading({
-						title: res.msg,
-						duration: 1000
-					});
-					if (res.code === 200) {
+					
+					if (ress.code === 200) {
 						setTimeout(function() {
 							uni.navigateBack();
 						}, 500)
 					}
+					setTimeout(res=>{
+						uni.showLoading({
+							title: ress.msg,
+							icon: 'success',
+							duration: 1000
+						});
+					},1000)
 				})
 			},
 			settime: function() { //倒计时

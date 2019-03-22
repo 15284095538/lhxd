@@ -22,6 +22,14 @@
 				<text class="choice">￥{{ goodslist.vip_day_money }}/天 </text> (VIP会员)
 			</view>
 		</view>
+		<!-- <view @tap="mapOpen()" class="service">
+			<view class="tit">
+				<text class="icon"></text>服务商详细地址：
+			</view>
+			<view class="text">
+				{{ goodslist.description }}
+			</view>
+		</view> -->
 		<view class="service">
 			<view class="tit">
 				<text class="icon"></text>服务说明
@@ -56,6 +64,10 @@
 			</view>
 		</view>
 		<view class="order">
+			<view @tap="phoneClick()" class="kefu">
+				<image src="../../../static/images/kefu.png" mode=""></image>
+				<view class="">客服</view>
+			</view>
 			<view class="orderText">
 				押金：<text class="choice">￥{{ goodslist.day_deposit }}元</text>
 			</view>
@@ -101,6 +113,16 @@
 				</view>
 			</view>
 		</view>
+		
+		<!-- 合同 -->
+		<view v-if="htSuerShow" @tap="htSuerShowClick()" class="layerFixed">
+			<view class="contract">
+				<scroll-view  scroll-y="true" >
+					<view v-html="goodslist.hetong"></view>
+                </scroll-view>
+				<view @tap="htSuer()" class="htSuer">同意</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -126,7 +148,8 @@
 				goods_id: '',
 				goodslist: [],
 				addressId: '',
-				is_Authshow:false
+				is_Authshow:false,
+				htSuerShow: false
 			};
 		},
 		onLoad(e) {
@@ -147,8 +170,7 @@
 			spTabbarClick(index) {
 				this.spTabbarindex = index
 			},
-			sureClick() {
-				
+			htSuer(){ //同意合同
 				if( this.goodslist.is_Auth == 2 && this.goodslist.is_Auth == 1 ){
 					this.is_Authshow = true
 					return false
@@ -164,13 +186,28 @@
 					}
 					//console.log(that.textList = res.data)
 				});
+				this.layerFixedShow = false
 				this.layerFixedShow = true
+			},
+			sureClick() {
+				this.htSuerShow = true
+			},
+			htSuerShowClick(){
+				this.htSuerShow = !this.htSuerShow
 			},
 			layerFixedClick() {
 				this.layerFixedShow = !this.layerFixedShow
 			},
 			bubbling() {
 
+			},
+			phoneClick(){ // 拨打电话
+				uni.makePhoneCall({
+					phoneNumber: this.goodslist.kefu_tel
+				});
+			},
+			mapOpen(){ //打开地图
+				
 			},
 			addressSelect(e) {
 				this.address = this.textList[e.detail.value].store_name
@@ -392,6 +429,21 @@
 			flex: 1;
 			padding-left: 25upx;
 		}
+		
+		.kefu{
+			width: 100upx;
+			display: inline-block;
+			height: 100upx;
+			text-align: center;
+			border-right: 1upx solid #e2e2e2;
+			line-height: 20upx;
+			
+			image{
+				width: 40upx;
+				height: 40upx;
+				margin: 15upx 0 15upx 0;
+			}
+		}
 
 		.sure {
 			width: 210upx;
@@ -417,6 +469,34 @@
 		height: 100%;
 		bottom: 0;
 		background-color: rgba(0, 0, 0, 0.5);
+		
+		
+		.contract{
+			width: 690upx;
+			height: 1152upx;
+			background-color: #fff;
+			margin: 64upx auto;
+			border-radius: 10upx;
+			overflow: hidden;
+			
+			.htSuer{
+				width: 260upx;
+				height: 60upx;
+				margin: 20upx auto 0;
+				background-color: #ff792a;
+				border-radius: 10upx;
+				text-align: center;
+				line-height: 60upx;
+				color: #fff;
+				font-size: 30upx;
+			}
+			
+			scroll-view{
+				width: 630upx;
+				height: 1052upx;
+				margin: 0 auto;
+			}
+		}
 
 		.ListSelect {
 			padding: 25upx 0 0 0;

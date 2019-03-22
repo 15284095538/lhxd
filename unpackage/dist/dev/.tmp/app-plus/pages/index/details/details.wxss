@@ -136,6 +136,19 @@
             flex: 1;
     padding-left: 25rpx;
 }
+.order .kefu {
+    width: 100rpx;
+    display: inline-block;
+    height: 100rpx;
+    text-align: center;
+    border-right: 1rpx solid #e2e2e2;
+    line-height: 20rpx;
+}
+.order .kefu image {
+      width: 40rpx;
+      height: 40rpx;
+      margin: 15rpx 0 15rpx 0;
+}
 .order .sure {
     width: 210rpx;
     text-align: center;
@@ -157,6 +170,30 @@
   height: 100%;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
+}
+.layerFixed .contract {
+    width: 690rpx;
+    height: 1152rpx;
+    background-color: #fff;
+    margin: 64rpx auto;
+    border-radius: 10rpx;
+    overflow: hidden;
+}
+.layerFixed .contract .htSuer {
+      width: 260rpx;
+      height: 60rpx;
+      margin: 20rpx auto 0;
+      background-color: #ff792a;
+      border-radius: 10rpx;
+      text-align: center;
+      line-height: 60rpx;
+      color: #fff;
+      font-size: 30rpx;
+}
+.layerFixed .contract scroll-view {
+      width: 630rpx;
+      height: 1052rpx;
+      margin: 0 auto;
 }
 .layerFixed .ListSelect {
     padding: 25rpx 0 0 0;

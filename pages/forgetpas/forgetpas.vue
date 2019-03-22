@@ -8,7 +8,7 @@
 			<input type="number" class="int" placeholder="请输入手机号码" v-model="tel" />
 		</view>
 		<view class="Inputbox" style="background: url('../../static/images/code.png') no-repeat 0 50%; background-size: 29upx 32upx;">
-			<input type="password" class="int" placeholder="请输入验证码" v-model="yzm" />
+			<input type="number" class="int" placeholder="请输入验证码" v-model="yzm" />
 			<view v-on:click="settime" class="getcode">{{code}}</view>
 		</view>
 		<view class="Inputbox" style="background: url('../../static/images/pas.png') no-repeat 0 50%; background-size: 26upx 34upx;">

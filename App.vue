@@ -5,26 +5,26 @@
 			uni.getLocation({
 				type: 'wgs84',
 				success: function(res) {
-					let location = {
-						longitude: res.longitude,
-						latitude: res.latitude
-					}
-					uni.setStorage({
-						key: 'location',
-						data: location
-					});
+// 					let location = {
+// 						longitude: res.longitude,
+// 						latitude: res.latitude
+// 					}
+// 					uni.setStorage({
+// 						key: 'location',
+// 						data: location
+// 					});
 				}
 			});
 			//#endif
 			//#ifdef H5
-			let location = {
-				longitude: 104.06563984766076,
-				latitude: 30.53723692976744
-			}
-			uni.setStorage({
-				key: 'location',
-				data: location
-			});
+// 			let location = {
+// 				longitude: 104.06563984766076,
+// 				latitude: 30.53723692976744
+// 			}
+// 			uni.setStorage({
+// 				key: 'location',
+// 				data: location
+// 			});
 			//#endif
 		},
 		onShow: function() {

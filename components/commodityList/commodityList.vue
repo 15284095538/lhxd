@@ -135,12 +135,13 @@
 						width: 325upx;
 						vertical-align: top;
 						font-size: 28upx;
+						
 
 						.numImg {
 							width: 28upx;
 							height: 28upx;
 							display: inline-block;
-
+							margin-right: 10upx;
 						}
 					}
 

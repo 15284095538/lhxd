@@ -35,6 +35,7 @@
       "background": "#fff"
     }
   },
+  "usingComponents": {},
   "tabBar": {
     "color": "#a8a8a8",
     "backgroundColorBottom": "#ffffff",
@@ -69,7 +70,8 @@
     ]
   },
   "splashscreen": {
-    "autoclose": true
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
   },
   "appname": "联辉兄弟"
 }

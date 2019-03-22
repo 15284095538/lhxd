@@ -64,7 +64,7 @@
             },
             "icons" : {
                 "ios" : {
-                    "appstore" : "C:/Users/张明/Desktop/logo.png",
+                    "appstore" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/logo.png",
                     "ipad" : {
                         "app" : "unpackage/res/icons/76x76.png",
                         "app@2x" : "unpackage/res/icons/152x152.png",
@@ -98,9 +98,26 @@
             },
             "splashscreen" : {
                 "android" : {
-                    "hdpi" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/480x762.png",
-                    "xhdpi" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/720x1242.png",
+                    "hdpi" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/720x1242.png",
+                    "xhdpi" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/780x762.png",
                     "xxhdpi" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/1080x1882.png"
+                },
+                "ios" : {
+                    "iphone" : {
+                        "retina35" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "retina40" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "retina40l" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "retina47" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "retina47l" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "retina55" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "retina55l" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "iphonex" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "iphonexl" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "portrait-896h@2x" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "landscape-896h@2x" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "portrait-896h@3x" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png",
+                        "landscape-896h@3x" : "E:/张明小鱼科技项目html/联辉兄弟/psd/启动图/ios/750-1334.png"
+                    }
                 }
             }
         },

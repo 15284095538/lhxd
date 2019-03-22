@@ -43,7 +43,7 @@
 					url: '/pages/register/register'
 				});
 			},
-			forget() {
+			forget() { 
 				uni.navigateTo({
 					url: '/pages/forgetpas/forgetpas'
 				});
@@ -81,16 +81,26 @@
 					password: that.pas
 				}
 				this.$http.HttpRequst.requestLogin(true, 'user/login', params, 'POST', res => {
-					//console.log(res)
-					if (res.code === 200) {
+					//console.log(ress)
+					const data = res
+					if (data.code === 200) {
 						uni.setStorage({
 							key: 'userinfo',
-							data: res.data
+							data: data.data
 						});
+						uni.switchTab({
+							url: '/pages/index/home/home'
+						});
+					}else{
+						setTimeout(res=>{
+							uni.showLoading({
+								title: data.msg,
+								icon: 'success',
+								duration: 1000
+							});
+						},1000)
 					}
-					uni.switchTab({
-						url: '/pages/index/home/home'
-					});
+					
 				})
 			}
 		}

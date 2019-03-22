@@ -7,6 +7,7 @@
 					<image :src="item.img"></image>
 				</swiper-item>
 			</swiper>
+			<view @tap="cityClick()" class="city">{{ cityName }}</view>
 		</view>
 		<view class="menuLink">
 			<view :key="index" @tap="ListClick(item.id,item.title)" class="li" v-for="(item,index) in menuLink">
@@ -43,12 +44,18 @@
 				menuLink: [],
 				SpList: [],
 				onReachBottomshow: true,
-				page: 1
+				page: 1,
+				cityList:[],
+				cityName: ''
 			};
 		},
 		onLoad() {
+			const that = this
 			uni.getStorage({ //判断tokin存在
 				key: 'userinfo',
+				success: function(res){
+					that.getcity()
+				},
 				fail: function(res) {
 					uni.redirectTo({
 						url: '/pages/login/login'
@@ -68,6 +75,36 @@
 			}
 		},
 		methods: {
+			getcity(){
+				var that = this;
+				let params = {
+					_token: uni.getStorageSync('userinfo')._token
+				}
+				this.$http.HttpRequst.request(true, 'index/get_city', params, 'POST', res => {
+					if( res.code == 200 ){
+						that.cityList = res.data
+						uni.getStorage({ //判断tokin存在
+							key: 'cityName',
+							fail: function(res) {
+								let location = {
+									longitude: that.cityList[0].longitude,
+									latitude: that.cityList[0].latitude
+								}
+								uni.setStorage({
+									key: 'location',
+									data: location
+								});
+								uni.setStorage({
+									key: 'cityName',
+									data: that.cityList[0].areaName
+								});
+							}
+						});
+						this.cityName = uni.getStorageSync('cityName')
+						
+					}
+				});
+			},
 			getdata() {
 				var that = this;
 				let params = {
@@ -103,6 +140,34 @@
 				uni.navigateTo({
 					url: '/pages/index/list/list?id=' + id + '&text=' + text
 				})
+			},
+			cityClick(){
+				const that = this
+				let city = []
+				for(let i=0; i < this.cityList.length; i++){
+					city.push(this.cityList[i].areaName)
+				}
+				uni.showActionSheet({
+					itemList: city,
+					success: function (res) {
+						let location = {
+							longitude: that.cityList[res.tapIndex].longitude,
+							latitude: that.cityList[res.tapIndex].latitude
+						}
+						uni.setStorage({
+							key: 'location',
+							data: location
+						});
+						uni.setStorage({
+							key: 'cityName',
+							data: that.cityList[res.tapIndex].areaName
+						});
+						that.cityName = that.cityList[res.tapIndex].areaName
+					},
+					fail: function (res) {
+						console.log(res.errMsg);
+					}
+				});
 			}
 		}
 	}
@@ -112,6 +177,14 @@
 	.swiper {
 		height: 370upx;
 		width: 100%;
+		
+		.city{
+			position: absolute;
+			left: 30upx;
+			top: 30upx;
+			z-index: 9;
+			color: #fff;
+		}
 
 		swiper {
 			height: 370upx;

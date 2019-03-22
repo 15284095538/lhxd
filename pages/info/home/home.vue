@@ -47,11 +47,11 @@
 				<text class="text">我的设置</text>
 				<image class="link" src="../../../static/images/myright.png" mode=""></image>
 			</view>
-			<view @tap="makePhoneCall()" class="li">
+			<!-- <view @tap="makePhoneCall()" class="li">
 				<image class="icon" src="../../../static/images/my5.png" mode=""></image>
 				<text class="text">投诉电话</text>
 				<image class="link" src="../../../static/images/myright.png" mode=""></image>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -135,11 +135,11 @@
 					that.AuthInfo = res.data
 				});
 			},
-			makePhoneCall(){
-				uni.makePhoneCall({
-					phoneNumber: uni.getStorageSync('userinfo').complaint_tel
-				});
-			},
+// 			makePhoneCall(){
+// 				uni.makePhoneCall({
+// 					phoneNumber: uni.getStorageSync('userinfo').complaint_tel
+// 				});
+// 			},
 			getUserino() { // 获取个人信息
 				var that = this;
 				let params = {

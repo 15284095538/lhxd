@@ -47,20 +47,35 @@ page {
 }
 .ts {
   width: 660rpx;
-  margin: 20rpx auto 0;
+  margin: 50rpx auto 0;
   font-size: 28rpx;
 }
 .register {
   width: 678rpx;
   height: 182rpx;
-  position: relative;
+  position: absolute;
   left: 50rpx;
-  top: 420rpx;
+  bottom: -30rpx;
   cursor: pointer;
 }
 .register image {
     width: 678rpx;
     height: 182rpx;
     display: block;
+}
+.equity {
+  padding: 30rpx 20rpx 0 20rpx;
+  border-top: 1rpx solid #e2e2e2;
+  font-size: 28rpx;
+  height: 420rpx;
+  overflow: hidden;
+  background-color: #fff;
+}
+.equity scroll-view {
+    width: 100%;
+    height: 100%;
+}
+.equity .txt {
+    margin-top: 20rpx;
 }
 
