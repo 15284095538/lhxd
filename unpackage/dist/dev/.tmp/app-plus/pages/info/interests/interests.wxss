@@ -39,7 +39,7 @@ page {
 .int .input {
     float: right;
 }
-.int .input ._input {
+.int .input input {
       height: 100rpx;
       width: 300rpx;
       text-align: right;

@@ -264,6 +264,17 @@
 					"bounce": false
 				}
 			}
+		},
+		{
+			"path": "pages/index/home/homecity",
+			"style": {
+				"navigationBarTitleText": "城区",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": false
+				}
+			}
 		}
 	],
 	"globalStyle": {

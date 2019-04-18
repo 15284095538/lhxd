@@ -1,0 +1,1 @@
+<template name="4a3ede19"><view class="_view 4a3ede19"><view class="_view 4a3ede19 li" wx:key="index" key="{{index}}" bindtap="handleProxy" data-eventid="{{'4a3ede19-0-'+index}}" data-comkey="{{$k}}" wx:for="{{cityList}}" wx:for-index="index" wx:for-item="item">{{item.areaName}}</view></view></template>

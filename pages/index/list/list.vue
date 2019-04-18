@@ -158,6 +158,7 @@
 					areaId: this.fordata.areaId,
 					sort: this.fordata.sort,
 					price: this.fordata.price,
+					long: uni.getStorageSync('location').latitude + ',' + uni.getStorageSync('location').longitude,
 					_token: uni.getStorageSync('userinfo')._token
 				}
 				this.$http.HttpRequst.request(true, 'index/goods_list', params, 'POST', res => {

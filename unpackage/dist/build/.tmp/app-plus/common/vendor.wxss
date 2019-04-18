@@ -48,7 +48,7 @@
   width: 100%;
   background-color: #F5F5F5;
   min-height: 380rpx;
-  padding-bottom: 40rpx;
+  padding-bottom: 120rpx;
   overflow: hidden;
 }
 .SpList .box {

@@ -53,9 +53,6 @@
 			const that = this
 			uni.getStorage({ //判断tokin存在
 				key: 'userinfo',
-				success: function(res){
-					that.getcity()
-				},
 				fail: function(res) {
 					uni.redirectTo({
 						url: '/pages/login/login'
@@ -64,9 +61,21 @@
 			});
 		},
 		onShow() {
-			this.page = 1;
-			this.onReachBottomshow = true
-			this.getdata()
+			const that = this
+			that.page = 1;
+			that.onReachBottomshow = true
+			that.cityName = uni.getStorageSync('cityName')
+			uni.getStorage({ 
+				key: 'location',
+				success: function(res){
+					that.getdata()
+				},
+				fail: function(res) {
+					uni.redirectTo({
+						url: '/pages/index/home/homecity'
+					})
+				}
+			});
 		},
 		onReachBottom() {
 			if (this.onReachBottomshow) {
@@ -75,40 +84,12 @@
 			}
 		},
 		methods: {
-			getcity(){
-				var that = this;
-				let params = {
-					_token: uni.getStorageSync('userinfo')._token
-				}
-				this.$http.HttpRequst.request(true, 'index/get_city', params, 'POST', res => {
-					if( res.code == 200 ){
-						that.cityList = res.data
-						uni.getStorage({ //判断tokin存在
-							key: 'cityName',
-							fail: function(res) {
-								let location = {
-									longitude: that.cityList[0].longitude,
-									latitude: that.cityList[0].latitude
-								}
-								uni.setStorage({
-									key: 'location',
-									data: location
-								});
-								uni.setStorage({
-									key: 'cityName',
-									data: that.cityList[0].areaName
-								});
-							}
-						});
-						this.cityName = uni.getStorageSync('cityName')
-						
-					}
-				});
-			},
+			
 			getdata() {
 				var that = this;
 				let params = {
 					page: this.page,
+					long: uni.getStorageSync('location').latitude + ',' + uni.getStorageSync('location').longitude,
 					_token: uni.getStorageSync('userinfo')._token
 				}
 				this.$http.HttpRequst.request(true, 'index/index', params, 'POST', res => {
@@ -123,6 +104,15 @@
 							if (that.SpList[i].length > 4) {
 								that.SpList[i].initial = `${that.SpList[i].initial/DIVISOR}万`
 							}
+						}
+						if( Number(uni.getStorageSync('userinfo').balance) < 2000 ){
+							setTimeout(res=>{
+								uni.showToast({
+									title: '余额不足,请充值',
+									success: 'none',
+									duration: 1000
+								});
+							},500)
 						}
 					} else {
 						if (typeof(res.data.goods) === 'string') {
@@ -142,32 +132,9 @@
 				})
 			},
 			cityClick(){
-				const that = this
-				let city = []
-				for(let i=0; i < this.cityList.length; i++){
-					city.push(this.cityList[i].areaName)
-				}
-				uni.showActionSheet({
-					itemList: city,
-					success: function (res) {
-						let location = {
-							longitude: that.cityList[res.tapIndex].longitude,
-							latitude: that.cityList[res.tapIndex].latitude
-						}
-						uni.setStorage({
-							key: 'location',
-							data: location
-						});
-						uni.setStorage({
-							key: 'cityName',
-							data: that.cityList[res.tapIndex].areaName
-						});
-						that.cityName = that.cityList[res.tapIndex].areaName
-					},
-					fail: function (res) {
-						console.log(res.errMsg);
-					}
-				});
+				uni.redirectTo({
+					url: '/pages/index/home/homecity'
+				})
 			}
 		}
 	}
@@ -185,43 +152,36 @@
 			z-index: 9;
 			color: #fff;
 		}
-
 		swiper {
 			height: 370upx;
 			width: 100%;
 		}
-
 		image {
 			height: 370upx;
 			width: 750upx;
 			display: block;
 		}
 	}
-
 	.menuLink {
 		font-size: 0;
 		padding-bottom: 20upx;
-
 		.li {
 			width: 150upx;
 			height: 180upx;
 			text-align: center;
 			display: inline-block;
-
 			.img {
 				width: 92upx;
 				height: 92upx;
 				margin: 20upx auto;
 				border-radius: 50%;
 				overflow: hidden;
-
 				image {
 					width: 92upx;
 					height: 92upx;
 					display: block;
 				}
 			}
-
 			.text {
 				font-size: 22upx;
 				color: #333333;
@@ -231,29 +191,24 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 				line-height: 50upx;
-
 				.choice {
 					color: #ff792a;
 				}
 			}
 		}
 	}
-
 	.RecommendHot {
 		width: 100%;
 		height: 90upx;
 		background-color: #F5F5F5;
-
 		.box {
 			line-height: 90upx;
 			padding: 0 25upx;
-
 			.text {
 				font-size: 30upx;
 				color: #333333;
 				float: left;
 			}
-
 			.link {
 				float: right;
 				font-size: 28upx;

@@ -280,4 +280,29 @@
     margin: -204.5rpx 0 0 -350rpx;
     z-index: 99;
 }
+.service-aderss {
+  border-bottom: 20rpx solid #f5f5f5;
+  overflow: hidden;
+  padding: 25rpx;
+}
+.service-aderss .li {
+    line-height: 50rpx;
+    border-bottom: 1px solid #e2e2e2;
+    padding: 25rpx 60rpx 25rpx 0;
+    font-size: 28rpx;
+    position: relative;
+}
+.service-aderss .li image {
+      position: absolute;
+      right: 0rpx;
+      top: 50%;
+      width: 60rpx;
+      height: 60rpx;
+      margin: -30rpx 0 0 0;
+}
+.service-aderss .li ._span {
+      font-weight: bold;
+      font-size: 30rpx;
+      margin-right: 5px;
+}
 

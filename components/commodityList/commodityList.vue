@@ -58,7 +58,7 @@
 		width: 100%;
 		background-color: #F5F5F5;
 		min-height: 380upx;
-		padding-bottom: 40upx;
+		padding-bottom: 120upx;
 		overflow: hidden;
 
 		.box {

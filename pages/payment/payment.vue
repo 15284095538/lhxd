@@ -17,7 +17,7 @@
 			<view class="inputBox">
 				<input type="text" class="text" v-model="mobile" placeholder="请输入手机号" />
 			</view>
-			<view class="smallTit">选择住宅地址</view>
+			<view class="smallTit">选择使用地址</view>
 			<view @tap="showPickerClick()" style="padding-left: 20upx;" class="inputBox">
 				{{ adrinfo }}
 			</view>
@@ -182,8 +182,14 @@
 				this.$http.HttpRequst.request(false, 'order/addOrder', params, 'POST', res => {
 					if( res.code == 200 ){
 						uni.navigateTo({
-							url: '/pages/pay/pay?allday=' + that.allday + '&allprice=' + that.allprice + '&day_money=' + that.day_money + '&day_deposit=' + that.day_deposit + '&cover=' + res.data.good.cover + '&goods_name=' + res.data.good.goods_name + '&order_num=' + res.data.order_num + '&order_id=' + res.data.id
+							url: '/pages/pay/pay?allday=' + that.allday + '&allprice=' + that.allprice + '&day_money=' + that.day_money + '&day_deposit=' + that.day_deposit + '&cover=' + res.data.cover + '&goods_name=' + res.data.good.goods_name + '&order_num=' + res.data.order_num + '&order_id=' + res.data.id
 						})
+					}else{
+						uni.showToast({
+							title: res.msg,
+							icon: 'success',
+							duration: 800
+						});
 					}
 				});
 				console.log(params)

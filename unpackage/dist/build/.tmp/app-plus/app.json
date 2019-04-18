@@ -23,7 +23,8 @@
     "pages/pay/pay",
     "pages/info/interests/interests",
     "pages/info/authentication/authentication",
-    "pages/news/details/details"
+    "pages/news/details/details",
+    "pages/index/home/homecity"
   ],
   "subPackages": [],
   "window": {
@@ -73,5 +74,6 @@
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
-  "appname": "联辉兄弟"
+  "appname": "联辉兄弟",
+  "compilerVersion": "1.8.2"
 }

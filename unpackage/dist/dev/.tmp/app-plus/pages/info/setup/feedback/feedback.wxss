@@ -37,7 +37,7 @@ page {
   padding: 25rpx;
   margin-top: 25rpx;
 }
-.textarea ._textarea {
+.textarea textarea {
     width: 700rpx;
     height: 260rpx;
     font-size: 28rpx;

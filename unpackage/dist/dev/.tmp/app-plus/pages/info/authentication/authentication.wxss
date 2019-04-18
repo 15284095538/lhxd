@@ -12,7 +12,7 @@ page {
     margin: 0 auto;
     border-bottom: 1rpx solid #E2E2E2;
 }
-.int .box ._input {
+.int .box input {
       width: 690rpx;
       height: 100rpx;
       line-height: 100rpx;

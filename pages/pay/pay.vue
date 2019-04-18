@@ -76,6 +76,7 @@
 		onLoad(e) {
 			this.userinfo = uni.getStorageSync('userinfo')
 			this.list = e
+			console.log( e )
 		},
 		methods: {
 			payLi(index) {
@@ -173,6 +174,19 @@
 												url: '/pages/info/home/home'
 											})
 										},600)
+									}
+								});
+							}else{
+								uni.showToast({
+									title: res.msg,
+									icon: 'success',
+									duration: 1000,
+									success() {
+										setTimeout( res => {
+											uni.switchTab({
+												url: '/pages/info/home/home'
+											})
+										},1000)
 									}
 								});
 							}

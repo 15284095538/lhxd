@@ -50,6 +50,13 @@
 			<view class="li">
 				押金：￥{{ details.cash_pledge }}元
 			</view>
+			<view @tap="serviceaderssMap(details.store.lng,details.store.lat)" class="li" >
+				取货地址：{{ details.store.address }}
+				<image src="../../../../static/images/dh.png" mode=""></image>
+			</view>
+			<view class="li">
+				联系电话：{{ details.store.tel }}
+			</view>
 		</view>
 		
 		<view class="orderBtn">
@@ -102,6 +109,15 @@
 				this.$http.HttpRequst.request(true, 'order/orderDetail', params, 'POST', res => {
 					if (res.code == 200) {
 						that.details = res.data
+					}
+				});
+			},
+			serviceaderssMap(lng,lat){
+				uni.openLocation({
+					latitude: Number(lat),
+					longitude: Number(lng),
+					success: function () {
+						console.log('success');
 					}
 				});
 			},
@@ -368,7 +384,7 @@
 	}
 	.orderinfo{
 		width: 650upx;
-		height: 500upx;
+		overflow: hidden;
 		background-color: #fff;
 		border-radius: 5px;
 		margin: -85upx auto 0;
@@ -379,6 +395,18 @@
 		border-bottom: 1upx solid #E2E2E2;
 		height: 99upx;
 		line-height: 99upx;
+		position: relative;
+		padding: 0 60upx 0 0;
+	}
+	
+	.orderinfo .li image{
+		position: absolute;
+		right: 0upx;
+		top: 50%;
+		width: 60upx;
+		height: 60upx;
+		margin: -30upx 0 0 0;
+		
 	}
 	.orderinfo .li:last-child{
 		border: 0;

@@ -22,14 +22,16 @@
 				<text class="choice">￥{{ goodslist.vip_day_money }}/天 </text> (VIP会员)
 			</view>
 		</view>
-		<!-- <view @tap="mapOpen()" class="service">
-			<view class="tit">
-				<text class="icon"></text>服务商详细地址：
-			</view>
+		<view @tap="mapOpen()" class="service-aderss">
 			<view class="text">
-				{{ goodslist.description }}
+				<view class="li" v-for="(item,index) in goodslist.stores" :key="index" >
+					<view @tap="serviceaderssMap(item.lng,item.lat)" class="p"><span>服务商店铺名:</span>{{item.store_name}}</view>
+					<view @tap="serviceaderssMap(item.lng,item.lat)" class="p"><span>服务商详细地址:</span>{{item.address}}</view>
+					<view @tap="serviceaderssTel(item.tel)" class="p"><span>服务商电话:</span>{{item.tel}}</view>
+					<image @tap="serviceaderssMap(item.lng,item.lat)" src="/static/images/dh.png" mode=""></image>
+				</view>
 			</view>
-		</view> -->
+		</view>
 		<view class="service">
 			<view class="tit">
 				<text class="icon"></text>服务说明
@@ -161,6 +163,7 @@
 				var that = this;
 				let params = {
 					goods_id: this.goods_id,
+					long: uni.getStorageSync('location').latitude + ',' + uni.getStorageSync('location').longitude,
 					_token: uni.getStorageSync('userinfo')._token
 				}
 				this.$http.HttpRequst.request(true, 'index/show', params, 'POST', res => {
@@ -178,6 +181,7 @@
 				var that = this;
 				let params = {
 					good_id: this.goods_id,
+					long: uni.getStorageSync('location').latitude + ',' + uni.getStorageSync('location').longitude,
 					_token: uni.getStorageSync('userinfo')._token
 				}
 				this.$http.HttpRequst.request(true, 'order/getStore', params, 'POST', res => {
@@ -206,8 +210,19 @@
 					phoneNumber: this.goodslist.kefu_tel
 				});
 			},
-			mapOpen(){ //打开地图
-				
+			serviceaderssTel(tel){
+				uni.makePhoneCall({
+					phoneNumber: tel
+				});
+			},
+			serviceaderssMap(lng,lat){
+				uni.openLocation({
+					latitude: Number(lat),
+					longitude: Number(lng),
+					success: function () {
+						console.log('success');
+					}
+				});
 			},
 			addressSelect(e) {
 				this.address = this.textList[e.detail.value].store_name
@@ -270,9 +285,16 @@
 					});
 					return false
 				}
+				
+				if( uni.getStorageSync('userinfo').is_vip == 1 ){
+					var money = this.goodslist.vip_day_money
+				}else{
+					var money = this.goodslist.day_money
+				}
+				
 				uni.navigateTo({
 					url: '/pages/payment/payment?startTime=' + this.startTime + '&endTime=' + this.endTime + '&addressId=' + this.addressId +
-						'&good_id=' + this.goods_id + '&day_money=' + this.goodslist.day_money + '&day_deposit=' + this.goodslist.day_deposit
+						'&good_id=' + this.goods_id + '&day_money=' + money + '&day_deposit=' + this.goodslist.day_deposit
 				})
 			}
 		}
@@ -592,6 +614,35 @@
 			top: 50%;
 			margin: -204.5upx 0 0 -350upx;
 			z-index: 99;
+		}
+	}
+	
+	.service-aderss{
+		border-bottom: 20upx solid #f5f5f5;
+		overflow: hidden;
+		padding: 25upx;
+		
+		.li{
+			line-height: 50upx;
+			border-bottom: 1px solid #e2e2e2;
+			padding: 25upx 60upx 25upx 0;
+			font-size: 28upx;
+			position: relative;
+			
+			image{
+				position: absolute;
+				right: 0upx;
+				top: 50%;
+				width: 60upx;
+				height: 60upx;
+				margin: -30upx 0 0 0;
+				
+			}
+			span{
+				font-weight: bold;
+				font-size: 30upx;
+				margin-right: 5px;
+			}
 		}
 	}
 </style>
