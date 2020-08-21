@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "修改个人信息",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
+}

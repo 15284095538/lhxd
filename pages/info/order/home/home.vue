@@ -23,6 +23,7 @@
 		</view>
 
 		<view class="list">
+			
 			<view v-for=" (item,index) in list.data " :key="index" class="li">
 				<view @tap="orderliClick(item.id)" class="tit">
 					<view class="address">{{ item.store.store_name }}</view>
@@ -32,6 +33,7 @@
 						<text v-if=" item.status == 3 ">租赁中</text>
 						<text v-if=" item.status == 5 ">已完成</text>
 						<text v-if=" item.status == 6 ">已取消</text>
+						<text v-if=" item.status == 7 ">线下支付(待审核)</text>
 					</view>
 				</view>
 				<view @tap="orderliClick(item.id)" class="details">
@@ -40,6 +42,9 @@
 					</view>
 					<view class="text">
 						<view class="h5">{{ item.good.goods_name }}</view>
+						<view class="oneday">
+							<text class="choice">{{ item.num }}/台 </text>
+						</view>
 						<view class="oneday">
 							<text class="choice">￥{{ item.good_price }}/天 </text>({{ item.day }}天)
 						</view>
@@ -65,6 +70,11 @@
 						</view>
 					</view>
 				</view>
+			</view>
+			
+			<view v-if="list.data == ''" class="no_data">
+				<image src="../../../../static/images/no_data.png" mode=""></image>
+				暂无数据
 			</view>
 		</view>
 	</view>
@@ -198,112 +208,110 @@
 					order_id: order_id,
 					_token: uni.getStorageSync('userinfo')._token
 				}
+				
+				// #ifdef  MP-WEIXIN
+					var item = ['微信支付']
+				// #endif
+				
+				// #ifdef  APP-PLUS	
+					var item = ['微信支付', '支付宝支付']
+				// #endif
 
-				if (that.userinfo.is_vip == 2) {
-					uni.showActionSheet({
-						itemList: ['微信支付', '支付宝支付'],
-						success: function(res) {
-							if (res.tapIndex === 0) {
-								that.$http.HttpRequst.request(true, 'order/wxPay', params, 'POST', res => { //微信支付
-									console.log(JSON.stringify(res.data))
+				uni.showActionSheet({
+					itemList: item,
+					success: function(res) {
+						if (res.tapIndex === 0) {
+							// #ifdef  MP-WEIXIN
+							that.$http.HttpRequst.request(true, 'order/wxPayx', params, 'POST', res => { //微信支付
 									uni.requestPayment({
-										provider: 'wxpay',
-										orderInfo: res.data, //订单数据
-										success: function(res) {
-											uni.showToast({
-												title: '支付成功',
-												icon: 'success',
-												duration: 800,
-												success() {
-													setTimeout(res => {
-														that.page = 1
-														that.onReachBottomshow = true
-														that.getData()
-													}, 800)
-												}
-											});
-										},
-										fail: function(err) {
-											uni.showToast({
-												title: '支付取消',
-												icon: 'success',
-												duration: 800
-											});
-										}
+									    provider: 'wxpay',
+									    timeStamp: res.data.timeStamp,
+									    nonceStr: res.data.nonceStr,
+									    package: res.data.package,
+									    signType: 'MD5',
+									    paySign: res.data.paySign,
+									    success: function (res) {
+									        uni.showToast({
+									        	title: '支付成功',
+									        	icon: 'success',
+									        	duration: 800,
+									        	success() {
+									        		setTimeout(res => {
+									        			that.page = 1
+									        			that.onReachBottomshow = true
+									        			that.getData()
+									        		}, 800)
+									        	}
+									        });
+									    },
+									    fail: function (err) {
+									        console.log('fail:' + JSON.stringify(err));
+									    }
 									});
+							});
+							// #endif
+							
+							// #ifdef  APP-PLUS
+							that.$http.HttpRequst.request(true, 'order/wxPay', params, 'POST', res => { //微信支付
+								uni.requestPayment({
+									provider: 'wxpay',
+									orderInfo: res.data, //订单数据
+									success: function(res) {
+										uni.showToast({
+											title: '支付成功',
+											icon: 'success',
+											duration: 800,
+											success() {
+												setTimeout(res => {
+													that.page = 1
+													that.onReachBottomshow = true
+													that.getData()
+												}, 800)
+											}
+										});
+									},
+									fail: function(err) {
+										uni.showToast({
+											title: '支付取消',
+											icon: 'success',
+											duration: 800
+										});
+									}
 								});
-							}
-							if (res.tapIndex === 1) {
-								that.$http.HttpRequst.request(true, 'alipay/pay', params, 'POST', res => { //支付宝支付
-									uni.requestPayment({
-										provider: 'alipay',
-										orderInfo: res, //订单数据
-										success: function(res) {
-											uni.showToast({
-												title: '支付成功',
-												icon: 'success',
-												duration: 800,
-												success() {
-													setTimeout(res => {
-														that.page = 1
-														that.onReachBottomshow = true
-														that.getData()
-													}, 800)
-												}
-											});
-										},
-										fail: function(err) {
-											uni.showToast({
-												title: '支付取消',
-												icon: 'success',
-												duration: 800
-											});
-										}
-									});
+							});
+							// #endif
+						}
+						if (res.tapIndex === 1) {
+							that.$http.HttpRequst.request(true, 'alipay/pay', params, 'POST', res => { //支付宝支付
+								uni.requestPayment({
+									provider: 'alipay',
+									orderInfo: res, //订单数据
+									success: function(res) {
+										uni.showToast({
+											title: '支付成功',
+											icon: 'success',
+											duration: 800,
+											success() {
+												setTimeout(res => {
+													that.page = 1
+													that.onReachBottomshow = true
+													that.getData()
+												}, 800)
+											}
+										});
+									},
+									fail: function(err) {
+										uni.showToast({
+											title: '支付取消',
+											icon: 'success',
+											duration: 800
+										});
+									}
 								});
-							}
+							});
 						}
-					});
-				} else { // 余额支付
-					uni.showActionSheet({
-						itemList: ['余额支付'],
-						success: function(res) {
-							if( res.tapIndex == 0 ){
-								if( uni.getStorageSync('userinfo').balance < Number(allprice) ){
-									uni.showToast({
-										title: '余额不足，请充值',
-										icon: 'success',
-										duration: 600,
-										success() {
-											setTimeout( res => {
-												uni.redirectTo({
-													url: '/pages/info/interests/interests'
-												})
-											},600)
-										}
-									});
-								}else{
-									that.$http.HttpRequst.request(false, 'order/balancePay', params, 'POST', res => {
-										if( res.code == 200 ){
-											uni.showToast({
-												title: '成功',
-												icon: 'success',
-												duration: 600,
-												success() {
-													setTimeout( res => {
-														that.page = 1
-														that.onReachBottomshow = true
-														that.getData()
-													},800)
-												}
-											});
-										}
-									});
-								}
-							}
-						}
-					});
-				}
+					}
+				});
 
 
 			},
@@ -411,7 +419,7 @@
 					.h5 {
 						display: -webkit-box;
 						-webkit-box-orient: vertical;
-						-webkit-line-clamp: 2;
+						-webkit-line-clamp: 1;
 						overflow: hidden;
 						line-height: 45upx;
 					}

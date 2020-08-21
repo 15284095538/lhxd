@@ -1,7 +1,9 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "忘记密码",
   "navigationBarTextStyle": "black",
   "titleNView": false,
-  "bounce": false
+  "bounce": false,
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
 }

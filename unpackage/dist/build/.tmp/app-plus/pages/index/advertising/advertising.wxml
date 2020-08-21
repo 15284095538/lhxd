@@ -1,0 +1,1 @@
+<view><head-ttop vue-id="1" Title="{{Title}}" topsrc="{{topsrc}}" backshow="{{backshow}}" bind:__l="__l"></head-ttop><view class="list"><rich-text nodes="{{list.content}}"></rich-text></view></view>

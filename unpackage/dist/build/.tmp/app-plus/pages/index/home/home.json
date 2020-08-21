@@ -1,7 +1,9 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "首页",
   "navigationBarTextStyle": "black",
   "titleNView": false,
-  "bounce": false
+  "bounce": false,
+  "usingComponents": {
+    "commodity-list": "/components/commodityList/commodityList"
+  }
 }

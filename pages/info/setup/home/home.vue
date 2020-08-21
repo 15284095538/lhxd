@@ -6,7 +6,7 @@
 
 		<view class="menuLink">
 
-			<view @tap="modifypas()" class="li">
+			<view v-if="wxFalse" @tap="modifypas()" class="li">
 				<text class="text">修改密码</text>
 				<image class="link" src="../../../../static/images/myright.png" mode=""></image>
 			</view>
@@ -15,7 +15,7 @@
 				<image class="link" src="../../../../static/images/myright.png" mode=""></image>
 			</view>
 		</view>
-		<view @tap="reLogin()" class="register">
+		<view v-if="wxFalse" @tap="reLogin()" class="register">
 			<image src="../../../../static/images/loginOut.png" mode=""></image>
 		</view>
 	</view>
@@ -32,8 +32,14 @@
 			return {
 				Title: '设置',
 				backshow: true,
-				topsrc: '../../../../static/images/back.png'
+				topsrc: '../../../../static/images/back.png',
+				wxFalse: true
 			}
+		},
+		onLoad() {
+			// #ifdef  MP-WEIXIN
+				this.wxFalse = false
+			// #endif
 		},
 		methods: {
 			modifypas() {

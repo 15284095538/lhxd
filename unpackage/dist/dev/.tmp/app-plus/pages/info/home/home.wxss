@@ -16,7 +16,7 @@
     top: 50%;
     width: 17rpx;
     height: 29rpx;
-    margin-top: -14.5rpx;
+    margin-top: -38.5rpx;
     z-index: 2;
 }
 .userinfo .userAvatarUrl {
@@ -24,7 +24,7 @@
     height: 140rpx;
     position: absolute;
     left: 40rpx;
-    top: 100rpx;
+    top: 70rpx;
     z-index: 2;
 }
 .userinfo .userAvatarUrl image {
@@ -36,10 +36,10 @@
 }
 .userinfo .info {
     width: 500rpx;
-    height: 100rpx;
+    height: 150rpx;
     position: absolute;
     left: 275rpx;
-    top: 120rpx;
+    top: 70rpx;
 }
 .userinfo .info .text {
       height: 50rpx;

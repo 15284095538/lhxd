@@ -126,6 +126,7 @@
 				position: absolute;
 				right: 40upx;
 				top: 0;
+				font-size: 30upx;
 			}
 
 			.portrait {

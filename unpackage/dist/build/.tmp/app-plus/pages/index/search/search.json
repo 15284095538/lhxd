@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "搜索",
+  "navigationBarTextStyle": "black",
+  "titleNView": false,
+  "bounce": false,
+  "usingComponents": {
+    "head-ttop": "/components/head/head",
+    "commodity-list": "/components/commodityList/commodityList"
+  }
+}

@@ -57,9 +57,12 @@ page {
 	height: 80rpx;
 	border-bottom: 1rpx solid #E2E2E2;
 	line-height: 80rpx;
+	padding: 20rpx 0;
 }
 .Spinfo .Spinfotit .Spinfoaddress{
 	float: left;
+	line-height: 40rpx;
+	width: 550rpx;
 }
 .Spinfo .Spinfotit .type{
 	float: right;
@@ -103,7 +106,6 @@ page {
 }
 .orderinfo .li{
 	border-bottom: 1rpx solid #E2E2E2;
-	height: 99rpx;
 	line-height: 99rpx;
 	position: relative;
 	padding: 0 60rpx 0 0;

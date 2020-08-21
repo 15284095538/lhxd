@@ -1,1 +1,3 @@
+<import src="/components/head/head.vue.wxml" />
+<import src="/components/commodityList/commodityList.vue.wxml" />
 

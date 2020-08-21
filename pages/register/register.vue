@@ -9,9 +9,9 @@
 		<view class="Inputbox" style="background: url('../../static/images/tel.png') no-repeat 0 50%; background-size: 22upx 34upx;">
 			<input type="number" class="int" placeholder="请输入手机号码" v-model="tel" />
 		</view>
-		<view class="Inputbox" style="background: url('../../static/images/email.png') no-repeat 0 50%; background-size: 34upx 34upx;">
+		<!-- <view class="Inputbox" style="background: url('../../static/images/email.png') no-repeat 0 50%; background-size: 34upx 34upx;">
 			<input type="text" class="int" placeholder="请输入邮箱" v-model="email" />
-		</view>
+		</view> -->
 		<view class="Inputbox" style="background: url('../../static/images/pas.png') no-repeat 0 50%; background-size: 26upx 34upx;">
 			<input type="password" class="int" placeholder="请输入密码" v-model="pas" />
 		</view>
@@ -68,24 +68,24 @@
 					});
 					return false
 				}
-				if (that.email === '') {
-					uni.showToast({
-						title: '请输入邮箱',
-						icon: 'success',
-						mask: true,
-						duration: 1000
-					});
-					return false
-				}
-				if( !reg.test(that.email) ){
-					uni.showToast({
-						title: '请输入正确邮箱',
-						icon: 'success',
-						mask: true,
-						duration: 1000
-					});
-					return false
-				}
+				// if (that.email === '') {
+				// 	uni.showToast({
+				// 		title: '请输入邮箱',
+				// 		icon: 'success',
+				// 		mask: true,
+				// 		duration: 1000
+				// 	});
+				// 	return false
+				// }
+				// if( !reg.test(that.email) ){
+				// 	uni.showToast({
+				// 		title: '请输入正确邮箱',
+				// 		icon: 'success',
+				// 		mask: true,
+				// 		duration: 1000
+				// 	});
+				// 	return false
+				// }
 				if (that.pas === '') {
 					uni.showToast({
 						title: '请输入密码',

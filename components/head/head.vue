@@ -2,7 +2,7 @@
 
 	<view class="Top_bar">
 
-		<view class="header">
+		<view :style="{'height':titleBarHeight,'padding-top':statusBarHeight,}" class="header">
 			<view @click="back" v-if="backshow" class="img">
 				<image :src="topsrc"></image>
 			</view>
@@ -28,6 +28,26 @@
 				default: '../../static/images/back.png'
 			}
 		},
+		data() {
+			return {
+				statusBarHeight: 0, 
+				titleBarHeight: 0, 
+			}
+		},
+		created() {
+			var  that = this;
+			 	uni.getSystemInfo({
+			 		success: function(res) {
+			 			if (res.model.indexOf('iPhone') !== -1) {
+							that.titleBarHeight = 44 + 'px';
+			 			} else {
+			 				that.titleBarHeight = 48  + 'px';
+						}
+							that.statusBarHeight = res.statusBarHeight  + 'px'
+					},
+						
+			 	})
+		 },
 		methods: {
 			back() {
 				uni.navigateBack({
@@ -66,8 +86,7 @@
 				display: block;
 				position: absolute;
 				left: 25upx;
-				top: 50%;
-				margin-top: -17.5upx;
+				bottom: 25upx;
 			}
 		}
 
@@ -77,7 +96,7 @@
 			line-height: 90upx;
 			position: absolute;
 			left: 50%;
-			top: 0;
+			bottom: 0;
 			margin-left: -200upx;
 			text-align: center;
 			font-size: 36upx;

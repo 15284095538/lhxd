@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "首页",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "commodity-list": "/components/commodityList/commodityList"
+  }
+}

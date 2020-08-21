@@ -15,8 +15,8 @@
 		<view class="int">
 			<text>充值金额：</text>
 			<view class="input">
-				<text v-if=" userinfo.is_vip == 2 ">{{ price }}</text>
-				<input v-if=" userinfo.is_vip == 1 " v-model="price" type="text" value="" />元
+				<!-- <text v-if=" userinfo.is_vip == 2 ">{{ price }}</text> -->
+				<input v-model="price" type="text" value="" />元
 			</view>
 		</view>
 		
@@ -30,9 +30,9 @@
 			</scroll-view>
 		</view>
 
-		<view class="ts">
-			提示：预充值后升级为会员，可享受折扣和免押金，第一次充值必须充值5000元，之后可自定义充值。
-		</view>
+		<!-- <view class="ts">
+			提示：预充值后升级为VIP会员，可享受折扣和免押金，第一次充值必须充值5000元，之后可自定义充值。
+		</view> -->
 
 		<view @tap="addOrder()" class="register">
 			<image src="../../../static/images/interests2.png" mode=""></image>
@@ -52,7 +52,7 @@
 				Title: '会员权益',
 				backshow: true,
 				topsrc: '../../../static/images/back.png',
-				price: 5000,
+				price: 0,
 				userinfo: [],
 				order_id: '',
 				vipEquityList: [],
@@ -60,11 +60,11 @@
 		},
 		onLoad() {
 			this.userinfo = uni.getStorageSync('userinfo')
-			if (this.userinfo.is_vip == 2) {
-				this.price = 5000
-			} else {
-				this.price = ''
-			}
+			// if (this.userinfo.is_vip == 2) {
+			// 	this.price = 5000
+			// } else {
+			// 	this.price = ''
+			// }
 			this.vipEquity()
 		},
 		methods: {
@@ -94,7 +94,7 @@
 				})
 			},
 			addOrder() { // 创建订单
-				if (this.price == '') {
+				if (this.price <= 0) {
 					uni.showToast({
 						title: '请输入充值金额',
 						icon: 'success',
@@ -264,7 +264,7 @@
 		padding: 30upx 20upx 0 20upx;
 		border-top: 1upx solid #e2e2e2;
 		font-size: 28upx;
-		height: 420upx;
+		height: 580upx;
 		overflow: hidden;
 		background-color: #fff;
 		

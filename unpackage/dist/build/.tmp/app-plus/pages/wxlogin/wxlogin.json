@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "登录",
+  "navigationBarTextStyle": "black",
+  "titleNView": false,
+  "bounce": false,
+  "usingComponents": {}
+}

@@ -1,1 +1,0 @@
-<import src="/components/head/head.vue.wxml" /><template name="4be9491d"><view class="_view 4be9491d"><template data="{{...$root['0'], ...$root[$kk+'4be9491d-0'],$root}}" is="bae1d9a2"></template><rich-text nodes="{{list.content}}" class="_view 4be9491d vHtml"></rich-text></view></template>

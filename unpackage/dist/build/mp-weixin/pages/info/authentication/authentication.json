@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "认证资料",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
+}

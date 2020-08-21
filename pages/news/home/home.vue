@@ -1,9 +1,13 @@
 <template>
 	<view>
 		<!-- #ifndef MP-WEIXIN -->
-		<HeadTtop :Title="Title" :topsrc="topsrc" :backshow="backshow"></HeadTtop>
+		<HeadTtop :Title="Title" :backshow="backshow"></HeadTtop>
 		<!-- #endif -->
 		<view class="newsList">
+			<view v-if="list.data == ''" class="no_data">
+				<image src="../../../static/images/no_data.png" mode=""></image>
+				暂无数据
+			</view>
 			<view class='li' @tap="details(item.id)" v-for=' (item,index) in list.data' :key="index">
 				<!-- <view class='tit'>
 					<view class='spot' v-if='item.status'></view>{{item.content}}
@@ -16,7 +20,7 @@
 </template>
 
 <script>
-	import HeadTtop from "../../../components/head/head.vue"
+	import HeadTtop from '../../../components/head/head.vue'
 	export default {
 		components: {
 			HeadTtop
@@ -32,9 +36,21 @@
 			};
 		},
 		onLoad() {
-
+			
 		},
 		onShow() {
+			
+			const that = this
+			// uni.getStorage({ //判断tokin存在
+			// 	key: 'userinfo',
+			// 	fail: function(res) {
+			// 		uni.redirectTo({
+			// 			url: '/pages/login/login'
+			// 		})
+			// 		return false
+			// 	}
+			// });
+			
 			this.page = 1;
 			this.onReachBottomshow = true
 			this.getdata()
@@ -53,7 +69,7 @@
 					_token: uni.getStorageSync('userinfo')._token
 				}
 				this.$http.HttpRequst.request(true, 'message/getMessage', params, 'POST', res => {
-
+					
 					if (that.page == 1) {
 						that.list = res.data
 					} else {

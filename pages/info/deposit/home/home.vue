@@ -6,7 +6,18 @@
 
 		<view class="depositList">
 			<view class="box">
-				<view @tap="detailsClick(item.status)" class="li" v-for="(item,index) in SpList.data">
+				
+				<view v-if="SpList.data == ''" class="no_data">
+					<image src="../../../../static/images/no_data.png" mode=""></image>
+					暂无数据
+				</view>
+				
+				<view @tap="detailsClick(item.status)" :key="index" class="li" v-for="(item,index) in SpList.data">
+					<view class="status">
+						<text v-if=" item.status === 1 " >待退还</text>
+						<text v-if=" item.status === 2 " >待审核</text>
+						<text v-if=" item.status === 3 " >已退还</text>
+					</view>
 					<view class="top">
 						<view class="img">
 							<image :src="item.good.img_url" mode=""></image>
@@ -25,7 +36,7 @@
 						<view class="fl">
 							<text class="choice">￥{{ item.cash_pledge }}</text> (押金)
 						</view>
-						<view @tap="myCashPledge(item.id)" class="btn">
+						<view v-if=" item.status === 1 " @tap="myCashPledge(item.id)" class="btn">
 							退押金
 						</view>
 					</view>
@@ -130,12 +141,21 @@
 			.li {
 				width: 650upx;
 				padding: 25upx;
-				height: 290upx;
+				height: 340upx;
 				background-color: #fff;
 				margin-top: 25upx;
 				border-radius: 10upx;
 				overflow: hidden;
 				box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				
+				.status{
+					height: 40upx;
+					text-align: right;
+					color: #ff792a;
+					font-size: 24upx;
+					margin-bottom: 10upx;
+					line-height: 40upx;
+				}
 				
 				.top{
 					overflow: hidden;

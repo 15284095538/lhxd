@@ -12,6 +12,9 @@
 				<view class="text">
 					<view class="tit">{{ list.goods_name }}</view>
 					<view class="oneday">
+						<text class="choice">{{ list.number }}台</text>
+					</view>
+					<view class="oneday">
 						<text class="choice">￥{{ list.day_money }}元/天</text>(共{{ list.allday }}天)
 					</view>
 					<view class="oneday">
@@ -28,27 +31,32 @@
 			<view class="tit">
 				选择支付方式
 			</view>
-			<view v-if=" userinfo.is_vip == 2 ">
-				<view @tap="payLi(0)" class="li">
-					<image src="../../static/images/pay2.png" mode=""></image>
-					<text>微信支付</text>
-					<image v-if=" payIndex != 0 " class="s" src="../../static/images/pay4.png" mode=""></image>
-					<image v-if=" payIndex === 0 " class="s" src="../../static/images/pay5.png" mode=""></image>
-				</view>
-				<view @tap="payLi(1)" class="li">
-					<image src="../../static/images/pay1.png" mode=""></image>
-					<text>支付宝支付</text>
-					<image v-if=" payIndex != 1 " class="s" src="../../static/images/pay4.png" mode=""></image>
-					<image v-if=" payIndex === 1 " class="s" src="../../static/images/pay5.png" mode=""></image>
-				</view>
-			</view>
-
-			<view v-if=" userinfo.is_vip  == 1 " @tap="payLi(2)" class="li">
-				<image src="../../static/images/pay3.png" mode=""></image>
-				<text>余额支付</text>
+			<view @tap="payLi(0)" class="li">
+				<image src="../../static/images/pay2.png" mode=""></image>
+				<text>微信支付</text>
 				<image v-if=" payIndex != 0 " class="s" src="../../static/images/pay4.png" mode=""></image>
 				<image v-if=" payIndex === 0 " class="s" src="../../static/images/pay5.png" mode=""></image>
 			</view>
+			<view v-if=" wxFalse " @tap="payLi(1)" class="li">
+				<image src="../../static/images/pay1.png" mode=""></image>
+				<text>支付宝支付</text>
+				<image v-if=" payIndex != 1 " class="s" src="../../static/images/pay4.png" mode=""></image>
+				<image v-if=" payIndex === 1 " class="s" src="../../static/images/pay5.png" mode=""></image>
+			</view>
+			
+			<view v-if=" wxFalse " @tap="payLi(3)" class="li">
+				<image src="../../static/images/n-my2.png" mode=""></image>
+				<text>线下支付</text>
+				<image v-if=" payIndex != 3 " class="s" src="../../static/images/pay4.png" mode=""></image>
+				<image v-if=" payIndex === 3 " class="s" src="../../static/images/pay5.png" mode=""></image>
+			</view>
+
+			<!-- <view @tap="payLi(4)" class="li">
+				<image src="../../static/images/pay3.png" mode=""></image>
+				<text>余额支付</text>
+				<image v-if=" payIndex != 4 " class="s" src="../../static/images/pay4.png" mode=""></image>
+				<image v-if=" payIndex === 4 " class="s" src="../../static/images/pay5.png" mode=""></image>
+			</view> -->
 		</view>
 
 
@@ -70,13 +78,19 @@
 				backshow: true,
 				payIndex: 0,
 				list: [],
-				userinfo: ''
+				userinfo: '',
+				wxFalse: true
 			};
 		},
 		onLoad(e) {
 			this.userinfo = uni.getStorageSync('userinfo')
 			this.list = e
-			console.log( e )
+			console.log(this.list)
+			
+			// #ifdef  MP-WEIXIN
+				this.wxFalse = false
+			// #endif
+			
 		},
 		methods: {
 			payLi(index) {
@@ -88,111 +102,164 @@
 					order_id: this.list.order_id,
 					_token: uni.getStorageSync('userinfo')._token
 				}
-				if (that.userinfo.is_vip == 2) {
-					if (this.payIndex == 0) { // 微信支付
-						this.$http.HttpRequst.request(true, 'order/wxPay', params, 'POST', res => {
+				
+				if (this.payIndex == 0) { // 微信支付
+					
+					// #ifdef  MP-WEIXIN
+					this.$http.HttpRequst.request(true, 'order/wxPayx', params, 'POST', res => {
 							uni.requestPayment({
-								provider: 'wxpay',
-								orderInfo: res.data, //订单数据
-								success: function(res) {
-									uni.showToast({
-										title: '支付成功',
-										icon: 'success',
-										duration: 800,
-										success() {
-											setTimeout(res => {
-												uni.switchTab({
-													url: '/pages/info/home/home'
-												})
-											}, 800)
-										}
-									});
-								},
-								fail: function(err) {
-									uni.showToast({
-										title: '支付取消',
-										icon: 'success',
-										duration: 800
-									});
-								}
+							    provider: 'wxpay',
+							    timeStamp: res.data.timeStamp,
+							    nonceStr: res.data.nonceStr,
+							    package: res.data.package,
+							    signType: 'MD5',
+							    paySign: res.data.paySign,
+							    success: function (res) {
+							        uni.showToast({
+							        	title: '支付成功',
+							        	icon: 'success',
+							        	duration: 800,
+							        	success() {
+							        		setTimeout(res => {
+							        			uni.switchTab({
+							        				url: '/pages/info/home/home'
+							        			})
+							        		}, 800)
+							        	}
+							        });
+							    },
+							    fail: function (err) {
+							        console.log('fail:' + JSON.stringify(err));
+							    }
 							});
-						});
-					}
-					if (this.payIndex == 1) { // 支付宝支付
-						this.$http.HttpRequst.request(true, 'alipay/pay', params, 'POST', res => {
-							uni.requestPayment({
-								provider: 'alipay',
-								orderInfo: res, //订单数据
-								success: function(res) {
-									uni.showToast({
-										title: '支付成功',
-										icon: 'success',
-										duration: 800,
-										success() {
-											setTimeout(res => {
-												uni.switchTab({
-													url: '/pages/info/home/home'
-												})
-											}, 800)
-										}
-									});
-								},
-								fail: function(err) {
-									uni.showToast({
-										title: '支付取消',
-										icon: 'success',
-										duration: 800
-									});
-								}
-							});
-						});
-					}
-				}else{ //余额支付
-					if( uni.getStorageSync('userinfo').balance < this.allprice ){
-						uni.showToast({
-							title: '余额不足，请充值',
-							icon: 'success',
-							duration: 600,
-							success() {
-								setTimeout( res => {
-									uni.redirectTo({
-										url: '/pages/info/interests/interests'
-									})
-								},600)
-							}
-						});
-					}else{
-						this.$http.HttpRequst.request(false, 'order/balancePay', params, 'POST', res => {
-							if( res.code == 200 ){
+					});
+					// #endif
+					
+					// #ifdef  APP-PLUS
+					this.$http.HttpRequst.request(true, 'order/wxPay', params, 'POST', res => {
+						uni.requestPayment({
+							provider: 'wxpay',
+							orderInfo: res.data, //订单数据
+							success: function(res) {
 								uni.showToast({
-									title: '成功',
+									title: '支付成功',
 									icon: 'success',
-									duration: 600,
+									duration: 800,
 									success() {
-										setTimeout( res => {
+										setTimeout(res => {
 											uni.switchTab({
 												url: '/pages/info/home/home'
 											})
-										},600)
+										}, 800)
 									}
 								});
-							}else{
+							},
+							fail: function(err) {
 								uni.showToast({
-									title: res.msg,
+									title: '支付取消',
 									icon: 'success',
-									duration: 1000,
-									success() {
-										setTimeout( res => {
-											uni.switchTab({
-												url: '/pages/info/home/home'
-											})
-										},1000)
-									}
+									duration: 800
 								});
 							}
 						});
-					}
+					});
+					// #endif
 				}
+				
+				if (this.payIndex == 1) { // 支付宝支付
+					this.$http.HttpRequst.request(true, 'alipay/pay', params, 'POST', res => {
+						uni.requestPayment({
+							provider: 'alipay',
+							orderInfo: res, //订单数据
+							success: function(res) {
+								uni.showToast({
+									title: '支付成功',
+									icon: 'success',
+									duration: 800,
+									success() {
+										setTimeout(res => {
+											uni.switchTab({
+												url: '/pages/info/home/home'
+											})
+										}, 800)
+									}
+								});
+							},
+							fail: function(err) {
+								uni.showToast({
+									title: '支付取消',
+									icon: 'success',
+									duration: 800
+								});
+							}
+						});
+					});
+				}
+				
+				if( this.payIndex === 3 ){
+					
+					this.$http.HttpRequst.request(true, 'order/offlinepay', params, 'POST', res => {
+						uni.showToast({
+							title: '支付成功',
+							icon: 'success',
+							duration: 800,
+							success() {
+								setTimeout(res => {
+									uni.switchTab({
+										url: '/pages/info/home/home'
+									})
+								}, 800)
+							}
+						});
+					});
+				}
+				
+				// if( this.payIndex === 4 ){
+				// 	if( uni.getStorageSync('userinfo').balance < this.allprice ){
+				// 		uni.showToast({
+				// 			title: '余额不足，请充值',
+				// 			icon: 'success',
+				// 			duration: 600,
+				// 			success() {
+				// 				setTimeout( res => {
+				// 					uni.redirectTo({
+				// 						url: '/pages/info/interests/interests'
+				// 					})
+				// 				},600)
+				// 			}
+				// 		});
+				// 	}else{
+				// 		this.$http.HttpRequst.request(false, 'order/balancePay', params, 'POST', res => {
+				// 			if( res.code == 200 ){
+				// 				uni.showToast({
+				// 					title: '成功',
+				// 					icon: 'success',
+				// 					duration: 600,
+				// 					success() {
+				// 						setTimeout( res => {
+				// 							uni.switchTab({
+				// 								url: '/pages/info/home/home'
+				// 							})
+				// 						},600)
+				// 					}
+				// 				});
+				// 			}else{
+				// 				uni.showToast({
+				// 					title: res.msg,
+				// 					icon: 'success',
+				// 					duration: 1000,
+				// 					success() {
+				// 						setTimeout( res => {
+				// 							uni.switchTab({
+				// 								url: '/pages/info/home/home'
+				// 							})
+				// 						},1000)
+				// 					}
+				// 				});
+				// 			}
+				// 		});
+				// 	}
+				// }
 			}
 		}
 	}
@@ -248,10 +315,10 @@
 				font-size: 28upx;
 				display: -webkit-box;
 				-webkit-box-orient: vertical;
-				-webkit-line-clamp: 2;
+				-webkit-line-clamp: 1;
 				overflow: hidden;
 				line-height: 40upx;
-				height: 80upx;
+				height: 40upx;
 			}
 
 			.oneday {

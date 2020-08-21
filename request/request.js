@@ -1,4 +1,4 @@
-const baseUrl = "https://lhxd.shawyo.com/port/"; //测试环境
+const baseUrl = "https://ojcc168.com/port/"; //测试环境
 
 const HttpRequst = {};
 
@@ -28,9 +28,18 @@ HttpRequst.request = function(loading, url, params, method, callBack) { // reque
 					duration: 1000,
 					success() {
 						setTimeout(function() {
-							uni.redirectTo({
-								url: '/pages/login/login'
-							})
+							
+							// #ifdef  MP-WEIXIN
+								uni.redirectTo({
+									url: '/pages/wxlogin/wxlogin'
+								})
+							// #endif
+							
+							// #ifdef  APP-PLUS
+								uni.redirectTo({
+									url: '/pages/login/login'
+								})
+							// #endif
 						}, 1000)
 					}
 				});

@@ -1,0 +1,1 @@
+<view class="Top_bar"><view class="header" style="{{'height:'+(titleBarHeight)+';'+('padding-top:'+(statusBarHeight)+';')}}"><block wx:if="{{backshow}}"><view data-event-opts="{{[['tap',[['back',['$event']]]]]}}" class="img" bindtap="__e"><image src="{{topsrc}}"></image></view></block><view class="text">{{''+Title+''}}</view></view></view>

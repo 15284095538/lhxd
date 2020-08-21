@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "购买会员",
+  "navigationBarTextStyle": "black",
+  "titleNView": false,
+  "bounce": false,
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
+}

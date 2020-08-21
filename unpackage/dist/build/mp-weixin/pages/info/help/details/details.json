@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "售后服务",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
+}

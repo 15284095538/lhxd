@@ -1,2 +1,1 @@
-<import src="./details.vue.wxml" />
-    <template is="4be9491d" data="{{ ...$root['0'], $root }}"/>
+<view><head-ttop vue-id="1" Title="{{Title}}" topsrc="{{topsrc}}" backshow="{{backshow}}" bind:__l="__l"></head-ttop><view class="vHtml"><rich-text nodes="{{list.content}}"></rich-text></view></view>

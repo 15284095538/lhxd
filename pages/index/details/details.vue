@@ -4,6 +4,8 @@
 		<HeadTtop :Title="Title" :topsrc="topsrc" :backshow="backshow"></HeadTtop>
 		<!-- #endif -->
 		<view class="swiper">
+			<button class="numImg" @tap="shareClick" open-type="share"></button>
+			
 			<swiper indicator-dots="true" indicator-color="rgba(255,121,42,0.3)" indicator-active-color="rgba(255,121,42,0.8)"
 			 autoplay="true" interval="3000" circular="true">
 				<swiper-item class="item" :key="item" v-for="(item,index) in goodslist.img_url">
@@ -25,10 +27,10 @@
 		<view @tap="mapOpen()" class="service-aderss">
 			<view class="text">
 				<view class="li" v-for="(item,index) in goodslist.stores" :key="index" >
-					<view @tap="serviceaderssMap(item.lng,item.lat)" class="p"><span>服务商店铺名:</span>{{item.store_name}}</view>
-					<view @tap="serviceaderssMap(item.lng,item.lat)" class="p"><span>服务商详细地址:</span>{{item.address}}</view>
+					<view @tap="serviceaderssMap(item.lng,item.lat,item.store_name,item.address)" class="p"><span>服务商店铺名:</span>{{item.store_name}}</view>
+					<view @tap="serviceaderssMap(item.lng,item.lat,item.store_name,item.address)" class="p"><span>服务商详细地址:</span>{{item.address}}</view>
 					<view @tap="serviceaderssTel(item.tel)" class="p"><span>服务商电话:</span>{{item.tel}}</view>
-					<image @tap="serviceaderssMap(item.lng,item.lat)" src="/static/images/dh.png" mode=""></image>
+					<image @tap="serviceaderssMap(item.lng,item.lat,item.store_name,item.address)" src="/static/images/dh.png" mode=""></image>
 				</view>
 			</view>
 		</view>
@@ -52,17 +54,19 @@
 			<view class="li" :key="index" @tap="spTabbarClick(index)" :class=" spTabbarindex === index ? 'active':'' " v-for="(item,index) in spTabbarlist">
 				{{ item }}
 			</view>
-			<view v-if=" spTabbarindex === 0 " class="container">
-				<view v-html="goodslist.introduce" ></view>
-			</view>
-			<view v-if=" spTabbarindex === 1 " class="container">
-				<view v-html="goodslist.spec" ></view>
-			</view>
-			<view v-if=" spTabbarindex === 2 " class="container">
-				<view v-html="goodslist.problem" ></view>
-			</view>
-			<view v-if=" spTabbarindex === 3 " class="container">
-				<view v-html="goodslist.methods" ></view>
+			<view style="width: 100%; overflow: hidden;">
+				<view v-if=" spTabbarindex === 0 " class="container">
+					<view v-html="goodslist.introduce" ></view>
+				</view>
+				<view v-if=" spTabbarindex === 1 " class="container">
+					<view v-html="goodslist.spec" ></view>
+				</view>
+				<view v-if=" spTabbarindex === 2 " class="container">
+					<view v-html="goodslist.problem" ></view>
+				</view>
+				<view v-if=" spTabbarindex === 3 " class="container">
+					<view v-html="goodslist.methods" ></view>
+				</view>
 			</view>
 		</view>
 		<view class="order">
@@ -151,7 +155,9 @@
 				goodslist: [],
 				addressId: '',
 				is_Authshow:false,
-				htSuerShow: false
+				htSuerShow: false,
+				getshareurl: '',
+				is_open_auth: 0
 			};
 		},
 		onLoad(e) {
@@ -159,6 +165,30 @@
 			this.getdata()
 		},
 		methods: {
+			onShareAppMessage(){
+				return {
+				  title: this.goodslist.goods_name,
+				  imageUrl: this.goodslist.img_url[0],
+				  path: '/pages/index/home/home'
+				}
+			},
+			shareClick(){ // 分享
+				uni.share({
+				    provider: "weixin",
+				    scene: "WXSceneSession",
+				    type: 0,
+				    href: this.getshareurl,
+				    title: this.goodslist.goods_name,
+				    summary: this.goodslist.description,
+				    imageUrl: this.goodslist.img_url[0],
+				    success: function (res) {
+				        console.log("success:" + JSON.stringify(res));
+				    },
+				    fail: function (err) {
+				        console.log("fail:" + JSON.stringify(err));
+				    }
+				});
+			},
 			getdata() {
 				var that = this;
 				let params = {
@@ -167,16 +197,31 @@
 					_token: uni.getStorageSync('userinfo')._token
 				}
 				this.$http.HttpRequst.request(true, 'index/show', params, 'POST', res => {
+					
+					const regex = new RegExp('<img', 'gi');
+					res.data.introduce = res.data.introduce.replace(regex, `<img style="width: 100%;"`);
+					res.data.spec = res.data.spec.replace(regex, `<img style="width: 100%;"`);
+					res.data.problem = res.data.problem.replace(regex, `<img style="width: 100%;"`);
+					res.data.methods = res.data.methods.replace(regex, `<img style="width: 100%;"`);
 					that.goodslist = res.data
+				});
+				this.$http.HttpRequst.request(true, 'app/getshareurl', {}, 'POST', res => {
+					that.getshareurl = res.data
+				});
+				
+				this.$http.HttpRequst.request(true, 'index/getIsOpenAuth', {}, 'POST', res => {
+					that.is_open_auth = res.data.is_open_auth
 				});
 			},
 			spTabbarClick(index) {
 				this.spTabbarindex = index
 			},
 			htSuer(){ //同意合同
-				if( this.goodslist.is_Auth == 2 && this.goodslist.is_Auth == 1 ){
-					this.is_Authshow = true
-					return false
+				if( this.goodslist.is_Auth == 2 || this.goodslist.is_Auth == 1 ){
+					if( this.is_open_auth == 0 ){
+						this.is_Authshow = true
+						return false
+					}
 				}
 				var that = this;
 				let params = {
@@ -190,10 +235,31 @@
 					}
 					//console.log(that.textList = res.data)
 				});
-				this.layerFixedShow = false
 				this.layerFixedShow = true
 			},
 			sureClick() {
+				const that = this
+				uni.getStorage({ //判断tokin存在
+					key: 'userinfo',
+					fail: function(res) {
+						
+						// #ifdef  MP-WEIXIN
+							uni.redirectTo({
+								url: '/pages/wxlogin/wxlogin'
+							})
+						// #endif
+						
+						// #ifdef  APP-PLUS
+							uni.redirectTo({
+								url: '/pages/login/login'
+							})
+						// #endif
+						return false
+					}
+				});
+				
+				
+				
 				this.htSuerShow = true
 			},
 			htSuerShowClick(){
@@ -215,10 +281,12 @@
 					phoneNumber: tel
 				});
 			},
-			serviceaderssMap(lng,lat){
+			serviceaderssMap(lng,lat,store_name,address){
 				uni.openLocation({
 					latitude: Number(lat),
 					longitude: Number(lng),
+					name: store_name,
+					address: address,
 					success: function () {
 						console.log('success');
 					}
@@ -251,7 +319,6 @@
 					});
 					this.is_Authshow = false
 				}
-				
 			},
 			orderCLick() {
 				let startTime = Date.parse(new Date(this.startTime))
@@ -305,7 +372,25 @@
 	.swiper {
 		height: 320upx;
 		width: 100%;
+		position: relative;
 		border-bottom: 1upx solid #e2e2e2;
+		
+		.numImg{
+			position: absolute;
+			right: 15upx;
+			top: 15upx;
+			width: 48upx;
+			height: 48upx;
+			z-index: 99;
+			background-color: transparent;
+			text-align: center;
+			background: url(../../../static/images/share.png) no-repeat center center;
+			background-size: 100% 100%;
+			
+			&:after{
+				border: 0;
+			}
+		}
 
 		swiper {
 			height: 320upx;
@@ -428,10 +513,14 @@
 		}
 
 		.container {
-			padding: 25upx 0 25upx 25upx;
+			padding: 25upx 25upx 25upx 25upx;
 			font-size: 28upx;
 			line-height: 40upx;
 			border-bottom: 30upx solid #f5f5f5;
+			
+			img{
+				width: 100%;
+			}
 		}
 	}
 
@@ -488,17 +577,20 @@
 		position: fixed;
 		z-index: 3;
 		left: 0;
-		height: 100%;
 		bottom: 0;
 		background-color: rgba(0, 0, 0, 0.5);
 		
 		
 		.contract{
 			width: 690upx;
-			height: 1152upx;
+			height: 1060upx;
 			background-color: #fff;
-			margin: 64upx auto;
-			border-radius: 10upx;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -345upx;
+			margin-top: -530upx;
+			border-radius: 30upx;
 			overflow: hidden;
 			
 			.htSuer{
@@ -514,9 +606,10 @@
 			}
 			
 			scroll-view{
-				width: 630upx;
-				height: 1052upx;
+				width: 570upx;
+				height: 900upx;
 				margin: 0 auto;
+				padding: 30upx;
 			}
 		}
 

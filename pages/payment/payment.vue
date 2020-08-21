@@ -9,10 +9,10 @@
 			<view class="inputBox">
 				<input type="text" class="text" v-model="username" placeholder="请输入姓名" />
 			</view>
-			<view class="smallTit">身份证号</view>
+			<!-- <view class="smallTit">身份证号</view>
 			<view class="inputBox">
 				<input type="text" class="text" v-model="id_card" placeholder="请输入身份证号" />
-			</view>
+			</view> -->
 			<view class="smallTit">手机号</view>
 			<view class="inputBox">
 				<input type="text" class="text" v-model="mobile" placeholder="请输入手机号" />
@@ -24,6 +24,10 @@
 			<view class="smallTit">详细地址</view>
 			<view class="inputBox">
 				<input type="text" class="text" v-model="address" placeholder="请输入详细地址" />
+			</view>
+			<view class="smallTit">机器数量</view>
+			<view class="inputBox">
+				<input type="number" class="text" v-model="number" />
 			</view>
 		</view>
 
@@ -52,11 +56,27 @@
 
 		<view @tap="addOrder()" class="pay">
 			<view class="text">
-				共租赁 <text class="choice">{{ allday }}</text> 天，合计 <text class="choice">￥{{ allprice }}</text> 元
+				共租赁 
+				<text class="choice">{{ allday }}</text>
+				 天
+				 <text class="choice">{{number}}</text>
+				 台，合计 
+				 <text class="choice">￥{{ allprice }}</text>
+				  元
 			</view>
 			<view class="sure">去结算</view>
 		</view>
-
+		
+		<view v-if="layerBoxFalse" @tap="layerBoxClick" class="layerBox">
+			<view @tap.stop="" class="boxss">
+				<view class="tit_top">推荐商品</view>
+				
+				<scroll-view scroll-y="true">
+					<commodityList :SpList="SpList"></commodityList>
+				</scroll-view>
+			</view>
+		</view>
+		
 	</view>
 </template>
 
@@ -65,9 +85,12 @@
 	import cityData from '../../request/city.js';
 	import areaData from '../../request/area.js';
 	import HeadTtop from '../../components/head/head.vue'
+	import commodityList from '../../components/commodityList/commodityList.vue'
+	
 	export default {
 		components: {
 			'HeadTtop': HeadTtop,
+			'commodityList': commodityList
 		},
 		data() {
 			return {
@@ -90,6 +113,9 @@
 				mobile: '',
 				day_money:'',//日租金
 				day_deposit:'',//押金
+				number: 1,
+				SpList: [],
+				layerBoxFalse: false
 			};
 		},
 		onLoad(e) {
@@ -103,6 +129,8 @@
 			this.cityDataList = cityData[this.pickerValueDefault[0]];
 			this.areaDataList = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]];
 			this.pickerValue = this.pickerValueDefault;
+			
+			this.getdata();
 		},
 		methods: {
 			addOrder() {
@@ -114,24 +142,24 @@
 					});
 					return false
 				}
-				if (this.id_card == '') {
-					uni.showToast({
-						title: '请输入身份证号',
-						duration: 1000
-					});
-					return false
-				}
-				if (this.id_card.length == 18) {
+				// if (this.id_card == '') {
+				// 	uni.showToast({
+				// 		title: '请输入身份证号',
+				// 		duration: 1000
+				// 	});
+				// 	return false
+				// }
+				// if (this.id_card.length == 18) {
 
-				} else {
-					uni.showToast({
-						title: '请输入正确身份证号码',
-						icon: 'success',
-						mask: true,
-						duration: 1000
-					});
-					return false
-				}
+				// } else {
+				// 	uni.showToast({
+				// 		title: '请输入正确身份证号码',
+				// 		icon: 'success',
+				// 		mask: true,
+				// 		duration: 1000
+				// 	});
+				// 	return false
+				// }
 
 				if (!myreg.test(this.mobile)) {
 					uni.showToast({
@@ -163,8 +191,14 @@
 					});
 					return false
 				}
-
-
+				
+				if (this.number == 0) {
+					uni.showToast({
+						title: '请输入商品数量',
+						duration: 1000
+					});
+					return false
+				}
 
 				var that = this;
 				let params = {
@@ -177,12 +211,13 @@
 					areaname: this.adrinfo,
 					address: this.address,
 					mobile: this.mobile,
+					num: this.number,
 					_token: uni.getStorageSync('userinfo')._token
 				}
 				this.$http.HttpRequst.request(false, 'order/addOrder', params, 'POST', res => {
 					if( res.code == 200 ){
 						uni.navigateTo({
-							url: '/pages/pay/pay?allday=' + that.allday + '&allprice=' + that.allprice + '&day_money=' + that.day_money + '&day_deposit=' + that.day_deposit + '&cover=' + res.data.cover + '&goods_name=' + res.data.good.goods_name + '&order_num=' + res.data.order_num + '&order_id=' + res.data.id
+							url: '/pages/pay/pay?allday=' + that.allday + '&allprice=' + that.allprice + '&day_money=' + that.day_money + '&day_deposit=' + that.day_deposit + '&cover=' + res.data.cover + '&goods_name=' + res.data.good.goods_name + '&order_num=' + res.data.order_num + '&order_id=' + res.data.id +'&number=' + that.number
 						})
 					}else{
 						uni.showToast({
@@ -190,9 +225,19 @@
 							icon: 'success',
 							duration: 800
 						});
+						
+						if( res.code == 421 ){
+							if( res.data.length > 0 ){
+								that.layerBoxFalse = true
+							}
+							that.SpList = res.data
+						}
+						
 					}
 				});
-				console.log(params)
+			},
+			layerBoxClick(){
+				this.layerBoxFalse = false
 			},
 			showPickerClick() {
 				this.showPicker = true;
@@ -269,6 +314,23 @@
 			},
 			_getCityCode() {
 				return this.areaDataList[this.pickerValue[2]].value;
+			},
+			getdata(){
+				var that = this;
+				let params = {
+					_token: uni.getStorageSync('userinfo')._token
+				}
+				this.$http.HttpRequst.request(false, 'index/user_address', params, 'POST', res => {
+					if( res.code == 200 ){
+						if(res.data != ''){
+							that.address = res.data.address
+							that.id_card = res.data.id_card
+							that.mobile = res.data.mobile
+							that.username = res.data.username
+							that.adrinfo = res.data.areaname
+						}
+					}
+				});
 			}
 		},
 		computed: {
@@ -278,7 +340,7 @@
 				return Math.floor((endTime-startTime)/86400000)
 			},
 			allprice(){
-				return (this.allday * Number(this.day_money)) + Number(this.day_deposit)
+				return ( this.number * this.allday * Number(this.day_money)) + Number(this.day_deposit * this.number)
 			}
 		}
 	}
@@ -287,6 +349,41 @@
 <style lang="scss">
 	page {
 		background-color: #f5f5f5;
+	}
+	
+	.layerBox{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,0.5);
+		z-index: 999;
+		
+		.boxss{
+			width: 100%;
+			height: 688upx;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			background-color: #F5F5F5;
+			
+			.tit_top{
+				text-align: center;
+				height: 80upx;
+				line-height: 80upx;
+				font-weight: bold;
+				font-size: 24upx;
+			}
+			
+			scroll-view{
+				height: 608upx;
+				background-color: #fff;
+			}
+		}
 	}
 
 	.payment {

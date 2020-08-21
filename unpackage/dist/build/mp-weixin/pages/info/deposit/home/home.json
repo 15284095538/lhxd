@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的押金",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
+}

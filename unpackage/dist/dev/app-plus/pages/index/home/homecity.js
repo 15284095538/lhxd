@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"li{ height: ",[0,100],"; line-height: ",[0,100],"; padding: 0 ",[0,30],"; border-bottom: ",[0,1]," solid #E2E2E2; font-size: ",[0,28],"; }\n",],undefined,{path:"./pages/index/home/homecity.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/index/home/homecity.wxml') } }));

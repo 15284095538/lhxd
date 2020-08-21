@@ -1,7 +1,16 @@
 .swiper {
   height: 320rpx;
   width: 100%;
+  position: relative;
   border-bottom: 1rpx solid #e2e2e2;
+}
+.swiper .numImg {
+    position: absolute;
+    right: 15rpx;
+    top: 15rpx;
+    width: 40rpx;
+    height: 40rpx;
+    z-index: 99;
 }
 .swiper swiper {
     height: 320rpx;

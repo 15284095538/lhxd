@@ -24,6 +24,7 @@ page {
       position: absolute;
       right: 40rpx;
       top: 0;
+      font-size: 30rpx;
 }
 .infocontent .li .portrait {
       width: 80rpx;

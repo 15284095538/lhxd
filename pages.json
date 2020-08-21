@@ -23,6 +23,17 @@
 			}
 		},
 		{
+			"path": "pages/wxlogin/wxlogin",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": false
+				}
+			}
+		},
+		{
 			"path": "pages/register/register",
 			"style": {
 				"navigationBarTitleText": "注册",
@@ -269,6 +280,39 @@
 			"path": "pages/index/home/homecity",
 			"style": {
 				"navigationBarTitleText": "城区",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": false
+				}
+			}
+		},
+		{
+			"path": "pages/info/members/members",
+			"style": {
+				"navigationBarTitleText": "购买会员",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": false
+				}
+			}
+		},
+		{
+			"path": "pages/index/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": false
+				}
+			}
+		},
+		{
+			"path": "pages/index/advertising/advertising",
+			"style": {
+				"navigationBarTitleText": "广告详情",
 				"navigationBarTextStyle": "black",
 				"app-plus": {
 					"titleNView": false,

@@ -1,7 +1,7 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "我的",
   "navigationBarTextStyle": "black",
   "titleNView": false,
-  "bounce": false
+  "bounce": false,
+  "usingComponents": {}
 }

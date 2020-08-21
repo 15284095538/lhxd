@@ -14,7 +14,7 @@
 					</view>
 					<view class="bottom">
 						<view class="num">
-							<image src="../../../static/images/indexNum.png" class="numImg"></image>
+							<image src="../../static/images/indexNum.png" class="numImg"></image>
 							已有
 							<text class="choice">{{item.initial}}</text>
 							人付款

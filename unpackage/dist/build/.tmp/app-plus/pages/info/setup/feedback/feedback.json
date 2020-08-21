@@ -1,7 +1,9 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "意见反馈",
   "navigationBarTextStyle": "black",
   "titleNView": false,
-  "bounce": false
+  "bounce": false,
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
 }

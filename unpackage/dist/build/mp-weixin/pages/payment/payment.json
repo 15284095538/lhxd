@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "输入订单信息",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "commodity-list": "/components/commodityList/commodityList",
+    "head-ttop": "/components/head/head"
+  }
+}

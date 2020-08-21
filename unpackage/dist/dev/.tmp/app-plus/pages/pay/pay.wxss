@@ -40,10 +40,10 @@ page {
       font-size: 28rpx;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 1;
       overflow: hidden;
       line-height: 40rpx;
-      height: 80rpx;
+      height: 40rpx;
 }
 .spDet .text .oneday {
       font-size: 26rpx;

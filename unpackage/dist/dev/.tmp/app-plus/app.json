@@ -24,9 +24,11 @@
     "pages/info/interests/interests",
     "pages/info/authentication/authentication",
     "pages/news/details/details",
-    "pages/index/home/homecity"
+    "pages/index/home/homecity",
+    "pages/info/members/members",
+    "pages/index/search/search",
+    "pages/index/advertising/advertising"
   ],
-  "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "uni-app",
@@ -70,10 +72,12 @@
       }
     ]
   },
+  "nvueCompiler": "weex",
+  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
   "appname": "联辉兄弟",
-  "compilerVersion": "1.8.2"
+  "compilerVersion": "2.2.2"
 }

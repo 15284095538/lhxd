@@ -1,2 +1,1 @@
-<import src="./home.vue.wxml" />
-    <template is="a4d12892" data="{{ ...$root['0'], $root }}"/>
+<view><head-ttop vue-id="1" Title="{{Title}}" topsrc="{{topsrc}}" backshow="{{backshow}}" bind:__l="__l"></head-ttop><view class="newsList"><block wx:for="{{list.data}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view data-event-opts="{{[['tap',[['details',['$0'],[[['list.data','',index,'id']]]]]]]}}" class="li" bindtap="__e"><view class="describe">{{item.content}}</view><view class="time">{{item.update_time}}</view></view></block></view></view>

@@ -145,7 +145,7 @@
 		width: 678upx;
 		height: 182upx;
 		cursor: pointer;
-		margin: 250upx auto 0;
+		margin: 180upx auto 0;
 
 		image {
 			width: 678upx;
@@ -157,7 +157,7 @@
 	.register {
 		width: 590upx;
 		margin: -30upx auto 0;
-		font-size: 26upx;
+		font-size: 32upx;
 		color: #ff792a;
 		text-align: center;
 		position: relative;

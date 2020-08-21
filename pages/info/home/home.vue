@@ -9,8 +9,11 @@
 				<view class="text">
 					{{ username }}
 				</view>
-				<view class="text">
+				<view v-if="wxFalse" class="text">
 					<image src="../../../static/images/phone.png" mode=""></image>{{ tel }}
+				</view>
+				<view v-if=" is_vip === 1 " style="font-size: 20upx;" class="text">
+					会员到期时间:  {{ vip_end_time }}
 				</view>
 			</view>
 			<image @tap="modifyinfo()" class="more" src="../../../static/images/info.png" mode=""></image>
@@ -23,16 +26,21 @@
 				<image class="link" src="../../../static/images/myright.png" mode=""></image>
 			</view>
 			<view @tap="depositClick()" class="li">
-				<image class="icon" src="../../../static/images/my2.png" mode=""></image>
+				<image class="icon" src="../../../static/images/n-my1.png" mode=""></image>
 				<text class="text">我的押金</text>
 				<image class="link" src="../../../static/images/myright.png" mode=""></image>
 			</view>
-			<view @tap="interests()" class="li">
+			<view @tap="memberClick()" class="li">
+				<image class="icon" src="../../../static/images/my2.png" mode=""></image>
+				<text class="text">购买会员</text>
+				<image class="link" src="../../../static/images/myright.png" mode=""></image>
+			</view>
+			<!-- <view @tap="interests()" class="li">
 				<image class="icon" src="../../../static/images/my6.png" mode=""></image>
 				<text class="text">会员权益</text>
 				<image class="link" src="../../../static/images/myright.png" mode=""></image>
-			</view>
-			<view @tap="authentication()" class="li">
+			</view> -->
+			<view v-if="is_open_auth == 0" @tap="authentication()" class="li">
 				<image class="icon" src="../../../static/images/my7.png" mode=""></image>
 				<text class="text">认证资料上传</text>
 				<image class="link" src="../../../static/images/myright.png" mode=""></image>
@@ -63,13 +71,41 @@
 				header: '',
 				username: '',
 				tel: '',
-				AuthInfo: []
+				is_vip: '',
+				vip_end_time: '',
+				AuthInfo: [],
+				wxFalse: true,
+				is_open_auth: 0
 			};
 		},
+		onLoad() {
+			// #ifdef  MP-WEIXIN
+				this.wxFalse = false
+			// #endif
+		},
 		onShow() {
+			const that = this
+			uni.getStorage({ //判断tokin存在
+				key: 'userinfo',
+				fail: function(res) {
+					// #ifdef  MP-WEIXIN
+						uni.redirectTo({
+							url: '/pages/wxlogin/wxlogin'
+						})
+					// #endif
+					
+					// #ifdef  APP-PLUS
+						uni.redirectTo({
+							url: '/pages/login/login'
+						})
+					// #endif
+				}
+			});
 			this.header = uni.getStorageSync('userinfo').header
 			this.username = uni.getStorageSync('userinfo').username
 			this.tel = uni.getStorageSync('userinfo').tel
+			this.is_vip = uni.getStorageSync('userinfo').is_vip
+			this.vip_end_time = uni.getStorageSync('userinfo').vip_end_time.substring(0,10)
 			this.getIdentityAuthInfo()
 			this.getUserino()
 		},
@@ -77,6 +113,11 @@
 			setup() {
 				uni.navigateTo({
 					url: '/pages/info/setup/home/home'
+				})
+			},
+			memberClick(){
+				uni.navigateTo({
+					url: '/pages/info/members/members'
 				})
 			},
 			modifyinfo() {
@@ -117,7 +158,21 @@
 						mask: true,
 						duration: 1000
 					});
-				} else {
+				} else if( this.AuthInfo.is_Auth === 4 ){ // 拒绝认证
+					uni.showToast({
+						title: '认证拒绝，请重新认证',
+						icon: 'success',
+						mask: true,
+						duration: 2000,
+						success() {
+							setTimeout(function(){
+								uni.navigateTo({
+									url: '/pages/info/authentication/authentication'
+								})
+							},2000)
+						}
+					});
+				}else {
 					uni.showToast({
 						title: '资料认证成功',
 						icon: 'success',
@@ -153,6 +208,10 @@
 						});
 					}
 				})
+				
+				this.$http.HttpRequst.request(true, 'index/getIsOpenAuth', {}, 'POST', res => {
+					that.is_open_auth = res.data.is_open_auth
+				});
 			},
 		},
 	}
@@ -178,7 +237,7 @@
 			top: 50%;
 			width: 17upx;
 			height: 29upx;
-			margin-top: -14.5upx;
+			margin-top: -38.5upx;
 			z-index: 2;
 		}
 
@@ -187,7 +246,7 @@
 			height: 140upx;
 			position: absolute;
 			left: 40upx;
-			top: 100upx;
+			top: 70upx;
 			z-index: 2;
 
 			image {
@@ -201,10 +260,10 @@
 
 		.info {
 			width: 500upx;
-			height: 100upx;
+			height: 150upx;
 			position: absolute;
 			left: 275upx;
-			top: 120upx;
+			top: 70upx;
 
 			.text {
 				height: 50upx;
@@ -220,6 +279,12 @@
 				}
 			}
 		}
+		
+		/*  #ifdef  MP-WEIXIN  */
+		.info{
+			top: 110upx;
+		}
+		/*  #endif  */
 	}
 
 	.menuLink {

@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/home/home",
     "pages/login/login",
+    "pages/wxlogin/wxlogin",
     "pages/register/register",
     "pages/forgetpas/forgetpas",
     "pages/classification/home/home",
@@ -24,9 +25,11 @@
     "pages/info/interests/interests",
     "pages/info/authentication/authentication",
     "pages/news/details/details",
-    "pages/index/home/homecity"
+    "pages/index/home/homecity",
+    "pages/info/members/members",
+    "pages/index/search/search",
+    "pages/index/advertising/advertising"
   ],
-  "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "uni-app",
@@ -36,7 +39,6 @@
       "background": "#fff"
     }
   },
-  "usingComponents": {},
   "tabBar": {
     "color": "#a8a8a8",
     "backgroundColorBottom": "#ffffff",
@@ -70,10 +72,13 @@
       }
     ]
   },
+  "nvueCompiler": "uni-app",
+  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
   "appname": "联辉兄弟",
-  "compilerVersion": "1.8.2"
+  "compilerVersion": "2.4.2",
+  "usingComponents": {}
 }

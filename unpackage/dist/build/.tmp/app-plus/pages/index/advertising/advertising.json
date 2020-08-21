@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "广告详情",
+  "navigationBarTextStyle": "black",
+  "titleNView": false,
+  "bounce": false,
+  "usingComponents": {
+    "head-ttop": "/components/head/head"
+  }
+}

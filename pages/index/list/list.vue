@@ -22,6 +22,12 @@
 		</view>
 
 		<view class="list">
+			
+			<view v-if="SpList.length == 0" class="no_data">
+				<image src="../../../static/images/no_data.png" mode=""></image>
+				暂无数据
+			</view>
+			
 			<commodityList :SpList="SpList"></commodityList>
 		</view>
 
